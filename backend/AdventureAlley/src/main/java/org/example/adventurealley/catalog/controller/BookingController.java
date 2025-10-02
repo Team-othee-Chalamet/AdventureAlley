@@ -30,4 +30,14 @@ public class BookingController {
     ResponseEntity<BookingDTO> getBookingByID(@PathVariable Long id){
         return ResponseEntity.ok(bookingService.getBookingByID(id));
     }
+
+    @PostMapping
+    ResponseEntity<BookingDTO> createBooking(@RequestBody BookingDTO bookingDTO){
+        return ResponseEntity.ok(bookingService.saveBooking(bookingDTO));
+    }
+
+    @PutMapping("/{id}")
+    ResponseEntity<BookingDTO> updateBooking(@PathVariable Long id, @RequestBody BookingDTO bookingDTO){
+        return ResponseEntity.ok(bookingService.updateBooking(id, bookingDTO));
+    }
 }
