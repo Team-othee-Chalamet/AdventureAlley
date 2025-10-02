@@ -3,6 +3,8 @@ package org.example.adventurealley.catalog.controller;
 import org.example.adventurealley.catalog.dto.BookingDTO;
 import org.example.adventurealley.catalog.model.Booking;
 import org.example.adventurealley.catalog.service.BookingService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -39,5 +41,15 @@ public class BookingController {
     @PutMapping("/{id}")
     ResponseEntity<BookingDTO> updateBooking(@PathVariable Long id, @RequestBody BookingDTO bookingDTO){
         return ResponseEntity.ok(bookingService.updateBooking(id, bookingDTO));
+    }
+
+    @DeleteMapping("/{id}")
+    ResponseEntity<BookingDTO> deleteBooking(@PathVariable Long id){
+        try {
+            bookingService.deleteBooking(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 }

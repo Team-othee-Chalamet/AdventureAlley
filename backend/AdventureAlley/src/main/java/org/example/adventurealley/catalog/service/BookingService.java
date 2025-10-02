@@ -53,4 +53,12 @@ public class BookingService {
         foundBooking.setPersonPhoneNr(bookingDTO.bookingPhoneNr());
         return BookingMapper.toDto(bookingRepo.save(foundBooking));
     }
+
+    public void deleteBooking(Long id){
+        Optional<Booking> optionalBooking = bookingRepo.findById(id);
+        if (!optionalBooking.isPresent()){
+            throw new RuntimeException();
+        }
+        bookingRepo.delete(optionalBooking.get());
+    }
 }
