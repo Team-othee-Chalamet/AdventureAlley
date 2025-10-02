@@ -2,6 +2,7 @@ package org.example.adventurealley.catalog.service;
 
 import org.example.adventurealley.catalog.dto.BookingDTO;
 import org.example.adventurealley.catalog.dto.BookingMapper;
+import org.example.adventurealley.catalog.exceptions.BookingNotFoundException;
 import org.example.adventurealley.catalog.model.Booking;
 import org.example.adventurealley.catalog.repository.BookingRepo;
 import org.springframework.stereotype.Service;
@@ -25,14 +26,13 @@ public class BookingService {
         for (Booking booking: foundBookings){
             returnBookings.add(BookingMapper.toDto(booking));
         }
-
         return returnBookings;
     }
 
     public BookingDTO getBookingByID(Long id){
         Optional<Booking> foundBooking = bookingRepo.findById(id);
         if (!foundBooking.isPresent()){
-            throw new RuntimeException();
+            throw new BookingNotFoundException("Booking could not be foind with id: " + id);
         }
         return BookingMapper.toDto(foundBooking.get());
     }
@@ -45,7 +45,7 @@ public class BookingService {
     public BookingDTO updateBooking(Long id, BookingDTO bookingDTO){
         Optional<Booking> optionalBooking = bookingRepo.findById(id);
         if (!optionalBooking.isPresent()){
-            throw new RuntimeException();
+            throw new BookingNotFoundException("Booking could not be foind with id: " + id);
         }
         Booking foundBooking = optionalBooking.get();
         foundBooking.setPersonName(bookingDTO.bookingName());
@@ -57,7 +57,7 @@ public class BookingService {
     public void deleteBooking(Long id){
         Optional<Booking> optionalBooking = bookingRepo.findById(id);
         if (!optionalBooking.isPresent()){
-            throw new RuntimeException();
+            throw new BookingNotFoundException("Booking could not be foind with id: " + id);
         }
         bookingRepo.delete(optionalBooking.get());
     }
