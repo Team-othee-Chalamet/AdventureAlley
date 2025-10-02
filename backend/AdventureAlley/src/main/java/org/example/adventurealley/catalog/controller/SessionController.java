@@ -26,4 +26,9 @@ public class SessionController {
     ResponseEntity<SessionDTO> getSessionByID(@PathVariable Long id) {
         return ResponseEntity.ok().body(sessionService.getSessionById(id));
     }
+
+    @PostMapping
+    ResponseEntity<SessionDTO> createSession(@RequestBody SessionDTO sessionDTO) {
+        return ResponseEntity.ok().body(sessionService.createSession(sessionDTO));
+    }
 }

@@ -36,4 +36,9 @@ public class SessionService {
         }
         return SessionMapper.toDTO(foundSession.get());
     }
+
+    public SessionDTO createSession(SessionDTO sessionDTO) {
+        return SessionMapper.toDTO(sessionRepo.save(SessionMapper.toEntity(sessionDTO)));
+    }
+
 }
