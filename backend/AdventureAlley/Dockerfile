@@ -1,6 +1,6 @@
 # Build stage
 # Using the maven base img and specifying maven and JDK version
-FROM maven:3.9.11-eclipse-temurin-21
+FROM maven:3.9.11-eclipse-temurin-21 AS build
 # Select /app as the directory and copies pom and src into it
 WORKDIR /app
 COPY pom.xml .
