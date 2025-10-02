@@ -17,8 +17,9 @@ public class InitData implements CommandLineRunner {
     public void run(String... args) throws Exception {
         System.out.println("Starting commandLine Runner to initialize Data");
 
-        Booking booking1 = new Booking("Peter", "PeterMail", "PetersNummer123");
-        bookingRepo.save(booking1);
-
+        for (int i = 0; i < 10; i++) {
+            Booking booking = new Booking(""+i, ""+i, ""+i);
+            bookingRepo.save(booking);
+        }
     }
 }
