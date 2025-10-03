@@ -23,4 +23,7 @@ jobs:
           distribution: 'temurin'
           
       - name: Run tests
-        run: cd ./backend/AdventureAlley && mvn test 
+        run: cd ./backend/AdventureAlley && mvn test
+          
+      - name: Check workdir
+        run: pwd
