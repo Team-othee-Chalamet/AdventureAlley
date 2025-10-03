@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="38080ade-ad39-4b04-934d-a4bff5a23d5c" name="Changes" comment="True Init Commit&#10;&#10;All classes created and annotated&#10;Development can now begin">
+      <change beforePath="$PROJECT_DIR$/../.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/.github/workflows/hello-world.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/mvnw" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/mvnw.cmd" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/java/Hello" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/java/org/example/adventurealley/AdventureAlleyApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/java/org/example/adventurealley/catalog/controller/BookingController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/java/org/example/adventurealley/catalog/controller/ExceptionHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/java/org/example/adventurealley/catalog/controller/ProductController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/java/org/example/adventurealley/catalog/controller/SessionController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/java/org/example/adventurealley/catalog/controller/ShiftController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/java/org/example/adventurealley/catalog/dto/AddonDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/java/org/example/adventurealley/catalog/dto/BookingDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/java/org/example/adventurealley/catalog/dto/BookingMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/java/org/example/adventurealley/catalog/dto/ProductDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/java/org/example/adventurealley/catalog/dto/SessionDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/java/org/example/adventurealley/catalog/dto/ShiftDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/java/org/example/adventurealley/catalog/exceptions/BookingNotFoundException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/java/org/example/adventurealley/catalog/model/Activity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/java/org/example/adventurealley/catalog/model/Addon.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/java/org/example/adventurealley/catalog/model/Booking.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/java/org/example/adventurealley/catalog/model/Product.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/java/org/example/adventurealley/catalog/model/Session.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/java/org/example/adventurealley/catalog/model/Shift.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/java/org/example/adventurealley/catalog/model/activities/ActivityGoKart.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/java/org/example/adventurealley/catalog/model/activities/ActivityMiniGolf.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/java/org/example/adventurealley/catalog/repository/BookingRepo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/java/org/example/adventurealley/catalog/repository/ProductRepo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/java/org/example/adventurealley/catalog/repository/SessionRepo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/java/org/example/adventurealley/catalog/repository/ShiftRepo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/java/org/example/adventurealley/catalog/service/BookingService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/java/org/example/adventurealley/catalog/service/ProductService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/java/org/example/adventurealley/catalog/service/SessionService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/java/org/example/adventurealley/catalog/service/ShiftService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/java/org/example/adventurealley/common/baseClasses/BaseEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/java/org/example/adventurealley/common/config/InitData.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/resources/application-docker.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/AdventureAlley/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../backend/hello.txt" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+        <option value="Exception" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/../.." value="booking" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;KEAmimi&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:Team-othee-Chalamet/AdventureAlley.git&quot;,
+    &quot;accountId&quot;: &quot;819db692-e576-490f-af57-db3af8f736b5&quot;
+  }
+}</component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="33SXudAPlezYHtfK6nnFGeMxpgA" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "Spring Boot.AdventureAlleyApplication.executor": "Run",
+    "git-widget-placeholder": "dirChange",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/mikkelcaroemikkelsen/Programmering-3-semester/adventureAlley/AdventureAlley",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "inlay.hints",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/../.." />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="AdventureAlley" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="AdventureAlley" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+    <configuration name="AdventureAlleyApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="AdventureAlley" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.adventurealley.AdventureAlleyApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.23654.153" />
+        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-IU-243.23654.153" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="StructureViewState">
+    <option name="selectedTab" value="Logical" />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="38080ade-ad39-4b04-934d-a4bff5a23d5c" name="Changes" comment="" />
+      <created>1759311673670</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1759311673670</updated>
+      <workItem from="1759311675017" duration="19377000" />
+      <workItem from="1759479313125" duration="246000" />
+    </task>
+    <task id="LOCAL-00001" summary="True Init Commit&#10;&#10;All classes created and annotated&#10;Development can now begin">
+      <option name="closed" value="true" />
+      <created>1759313501517</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1759313501517</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="True Init Commit&#10;&#10;All classes created and annotated&#10;Development can now begin" />
+    <option name="LAST_COMMIT_MESSAGE" value="True Init Commit&#10;&#10;All classes created and annotated&#10;Development can now begin" />
+  </component>
+</project>
