@@ -23,4 +23,4 @@ jobs:
           distribution: 'temurin'
           
       - name: Run tests
-        run: mvn -Dtest="backend/AdventureAlley/**" test 
+        run: cd ./backend/AdventureAlley && mvn test 
