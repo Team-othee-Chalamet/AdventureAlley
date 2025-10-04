@@ -1,5 +1,7 @@
 package org.example.adventurealley.catalog.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import org.example.adventurealley.common.baseClasses.BaseEntity;
@@ -13,7 +15,9 @@ public class Session extends BaseEntity {
     LocalDate date;
     String timeslot;
     String sessionActivity;
+
     @ManyToOne //Booking should contain (mappedBy = 'Session')
+    @JsonBackReference
     Booking booking;
 
     public Session() {}

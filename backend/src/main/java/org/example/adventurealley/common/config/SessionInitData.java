@@ -21,7 +21,7 @@ public class SessionInitData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Booking booking = new Booking();
+        Booking booking = new Booking("Mikkel", "MikkelMail", "30504870");
         bookingRepo.save(booking);
 
         for (int i = 0; i < 10; i++) {
