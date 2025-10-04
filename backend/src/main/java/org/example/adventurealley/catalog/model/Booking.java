@@ -19,7 +19,6 @@ public class Booking extends BaseEntity {
     String personPhoneNr;
 
     @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
     List<Session> sessions = new ArrayList<>();
 
     public Booking(){}
@@ -61,5 +60,17 @@ public class Booking extends BaseEntity {
     public void addSession(Session session) {
         sessions.add(session);
         session.setBooking(this);
+    }
+
+    public void removeSession(Session session) {
+        sessions.remove(session);
+        session.setBooking(null);
+    }
+
+    public void removeAllSessions() {
+        for (Session session : sessions) {
+            session.setBooking(null);
+        }
+        sessions.clear();
     }
 }

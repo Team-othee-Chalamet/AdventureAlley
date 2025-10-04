@@ -1,11 +1,14 @@
 package org.example.adventurealley.catalog.service;
 
+import org.example.adventurealley.catalog.dto.BookingMapper;
 import org.example.adventurealley.catalog.dto.SessionDTO;
 import org.example.adventurealley.catalog.dto.SessionMapper;
 import org.example.adventurealley.catalog.model.Session;
+import org.example.adventurealley.catalog.model.activities.ActivityGoKart;
 import org.example.adventurealley.catalog.repository.SessionRepo;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -43,4 +46,49 @@ public class SessionService {
 
      */
 
+    public List<SessionDTO> getAllSessionsInWeek(String startDateString, String endDateString){
+        List<Session> allSessions = sessionRepo.findAll();
+        List<Session> sessionsInSpan = new ArrayList<>();
+
+        LocalDate startDate = LocalDate.parse(startDateString);
+        System.out.println(startDate);
+        LocalDate endDate = LocalDate.parse(endDateString);
+        System.out.println(endDate);
+
+        for (Session s: allSessions){
+            if (s.getDate().isAfter(startDate.minusDays(1)) && s.getDate().isBefore(endDate.plusDays(1))){
+                sessionsInSpan.add(s);
+            }
+        }
+        //Sessions within the span have been found, now to find the sessions that are unbooked.
+        List<Session> unbookedSessions = new ArrayList<>();
+        unbookedSessions.addAll(ActivityGoKart.getAvailableSessions(startDate, endDate));
+        System.out.println(unbookedSessions);
+
+        List<Session> sessionsToRemove = new ArrayList<>();
+
+        for (Session uBs: unbookedSessions){
+            for (Session bS: sessionsInSpan){
+                if(uBs.getDate().equals(bS.getDate()) && uBs.getStartTime().equals(bS.getStartTime()) && uBs.getActivityType().equals(bS.getActivityType())){
+                    sessionsToRemove.add(uBs);
+                }
+            }
+        }
+
+        System.out.println(sessionsToRemove);
+
+        unbookedSessions.removeAll(sessionsToRemove);
+        List<Session> completeSessionList = unbookedSessions;
+        completeSessionList.addAll(sessionsInSpan);
+
+        completeSessionList.sort(null);
+
+        List<SessionDTO> convertedList = new ArrayList<>();
+
+        for (Session s: completeSessionList){
+            convertedList.add(SessionMapper.toDTO(s));
+        }
+
+        return convertedList;
+    }
 }

@@ -6,12 +6,12 @@ import org.example.adventurealley.catalog.model.Session;
 public class SessionMapper {
 
     public static SessionDTO toDTO(Session session) {
-        SessionDTO sessionDTO = new SessionDTO(session.getDate(), session.getTimeslot(), session.getSessionActivity());
+        SessionDTO sessionDTO = new SessionDTO(session.getDate(), session.getStartTime(), session.getEndTime(), session.getActivityType(), session.getBookingStatus());
         return sessionDTO;
     }
 
     static public Session toEntity(SessionDTO sessionDTO, Booking booking) {
-        Session session = new Session(sessionDTO.date(), sessionDTO.timeslot(), sessionDTO.sessionActivity(), booking);
+        Session session = new Session(sessionDTO.date(), sessionDTO.startTime(), sessionDTO.endTime(), booking, sessionDTO.activityType());
         return session;
     }
 }
