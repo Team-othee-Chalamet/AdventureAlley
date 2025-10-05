@@ -5,6 +5,9 @@ import org.example.adventurealley.catalog.dto.SessionDTO;
 import org.example.adventurealley.catalog.dto.SessionMapper;
 import org.example.adventurealley.catalog.model.Session;
 import org.example.adventurealley.catalog.model.activities.ActivityGoKart;
+import org.example.adventurealley.catalog.model.activities.ActivityMiniGolf;
+import org.example.adventurealley.catalog.model.activities.ActivityPaintBall;
+import org.example.adventurealley.catalog.model.activities.ActivitySumo;
 import org.example.adventurealley.catalog.repository.SessionRepo;
 import org.springframework.stereotype.Service;
 
@@ -62,8 +65,10 @@ public class SessionService {
         }
         //Sessions within the span have been found, now to find the sessions that are unbooked.
         List<Session> unbookedSessions = new ArrayList<>();
-        unbookedSessions.addAll(ActivityGoKart.getAvailableSessions(startDate, endDate));
-        System.out.println(unbookedSessions);
+        unbookedSessions.addAll(ActivityGoKart.getAvailableSessions(startDate, endDate));//Add all Gokart sessions
+        unbookedSessions.addAll(ActivitySumo.getAvailableSessions(startDate, endDate));//Add all Paintball sessions
+        unbookedSessions.addAll(ActivityPaintBall.getAvailableSessions(startDate, endDate));//Add all Sumo Sessions
+        unbookedSessions.addAll(ActivityMiniGolf.getAvailableSessions(startDate, endDate));//Add all miniGolf Sessions
 
         List<Session> sessionsToRemove = new ArrayList<>();
 
@@ -75,7 +80,6 @@ public class SessionService {
             }
         }
 
-        System.out.println(sessionsToRemove);
 
         unbookedSessions.removeAll(sessionsToRemove);
         List<Session> completeSessionList = unbookedSessions;
