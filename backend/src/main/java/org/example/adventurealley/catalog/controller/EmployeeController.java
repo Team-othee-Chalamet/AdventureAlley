@@ -3,10 +3,7 @@ package org.example.adventurealley.catalog.controller;
 import org.example.adventurealley.catalog.dto.EmployeeDTO;
 import org.example.adventurealley.catalog.service.EmployeeService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,4 +27,9 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeService.getEmployeeById(id));
     }
 
+    @PostMapping
+    ResponseEntity<EmployeeDTO> createEmployee(@RequestBody EmployeeDTO employeeDTO){
+        System.out.println("Empl Controller recieved request");
+        return ResponseEntity.ok(employeeService.saveEmployee(employeeDTO));
+    }
 }

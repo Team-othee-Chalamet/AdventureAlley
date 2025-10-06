@@ -35,4 +35,10 @@ public class EmployeeService {
         }
         return EmployeeMapper.toDto(foundEmployee.get());
     }
+
+    public EmployeeDTO saveEmployee(EmployeeDTO employeeDTO) {
+        System.out.println("Empl service recieved request");
+        // Mapper turns DTO to entity, repo saves that entity and returns it, then mapper turns it to a DTO
+        return EmployeeMapper.toDto(employeeRepo.save(EmployeeMapper.toEntity(employeeDTO)));
+    }
 }
