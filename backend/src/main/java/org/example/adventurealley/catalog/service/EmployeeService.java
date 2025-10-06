@@ -41,4 +41,21 @@ public class EmployeeService {
         // Mapper turns DTO to entity, repo saves that entity and returns it, then mapper turns it to a DTO
         return EmployeeMapper.toDto(employeeRepo.save(EmployeeMapper.toEntity(employeeDTO)));
     }
+
+    public EmployeeDTO updateEmployee(Long id, EmployeeDTO employeeDTO) {
+
+        Optional<Employee> optionalEmployee = employeeRepo.findById(id);
+        if (!optionalEmployee.isPresent()){
+            throw new RuntimeException("No employee found with ID: "+id);
+        }
+
+        Employee foundEmployee = optionalEmployee.get();
+        Employee newData = EmployeeMapper.toEntity(employeeDTO);
+        foundEmployee.setName(newData.getName());
+        foundEmployee.setLastName(newData.getLastName());
+        foundEmployee.setStaffId(newData.getStaffId());
+        foundEmployee.setPassword(newData.getPassword());
+
+        return EmployeeMapper.toDto(employeeRepo.save(foundEmployee));
+    }
 }

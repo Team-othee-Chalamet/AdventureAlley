@@ -32,4 +32,9 @@ public class EmployeeController {
         System.out.println("Empl Controller recieved request");
         return ResponseEntity.ok(employeeService.saveEmployee(employeeDTO));
     }
+
+    @PutMapping("/{id}")
+    ResponseEntity<EmployeeDTO> updateEmployee(@PathVariable Long id, @RequestBody EmployeeDTO employeeDTO) {
+        return ResponseEntity.ok(employeeService.updateEmployee(id, employeeDTO));
+    }
 }
