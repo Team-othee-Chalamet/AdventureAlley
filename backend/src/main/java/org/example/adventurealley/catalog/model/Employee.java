@@ -1,21 +1,25 @@
 package org.example.adventurealley.catalog.model;
 
-public class Employee {
-    enum Role{ADMIN, REGULAR}
+import jakarta.persistence.Entity;
+import org.example.adventurealley.common.baseClasses.BaseEntity;
+
+@Entity
+public class Employee extends BaseEntity {
+
     private String name;
     private String lastName;
     private String staffId;
     private String password;
-    private Role role;
 
     public Employee(){};
 
-    public Employee(String name, String lastName, String staffId, String password, String role) {
+    // Role as enum was causing a headache when making a DTO, so will come back
+
+    public Employee(String name, String lastName, String staffId, String password) {
         this.name = name;
         this.lastName = lastName;
         this.staffId = staffId;
         this.password = password;
-        this.role = Role.valueOf(role.toUpperCase());
     }
 
     public String getName() {
@@ -48,13 +52,5 @@ public class Employee {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
     }
 }
