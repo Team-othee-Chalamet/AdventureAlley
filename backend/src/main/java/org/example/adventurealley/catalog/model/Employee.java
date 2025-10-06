@@ -1,7 +1,5 @@
 package org.example.adventurealley.catalog.model;
 
-
-
 public class Employee {
     enum Role{ADMIN, REGULAR}
     private String name;
