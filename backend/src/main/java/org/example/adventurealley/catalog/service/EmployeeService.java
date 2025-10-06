@@ -58,4 +58,12 @@ public class EmployeeService {
 
         return EmployeeMapper.toDto(employeeRepo.save(foundEmployee));
     }
+
+    public void deleteEmployee(Long id){
+        Optional<Employee> optionalEmployee = employeeRepo.findById(id);
+        if (!optionalEmployee.isPresent()) {
+            throw new RuntimeException("Could not find employee with id: "+id);
+        }
+        employeeRepo.delete(optionalEmployee.get());
+    }
 }
