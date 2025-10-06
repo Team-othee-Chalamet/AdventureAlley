@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmployeeService {
@@ -25,5 +26,13 @@ public class EmployeeService {
             returnEmployees.add(EmployeeMapper.toDto(employee));
         }
         return returnEmployees;
+    }
+
+    public EmployeeDTO getEmployeeById(Long id){
+        Optional<Employee> foundEmployee = employeeRepo.findById(id);
+        if (!foundEmployee.isPresent()){
+            throw new RuntimeException("Employee could not be found with ID: " + id);
+        }
+        return EmployeeMapper.toDto(foundEmployee.get());
     }
 }

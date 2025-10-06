@@ -4,6 +4,7 @@ import org.example.adventurealley.catalog.dto.EmployeeDTO;
 import org.example.adventurealley.catalog.service.EmployeeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,4 +24,10 @@ public class EmployeeController {
         List<EmployeeDTO> employeeList = employeeService.getAllEmployees();
         return ResponseEntity.ok(employeeList);
     }
+
+    @GetMapping("/{id}")
+        ResponseEntity<EmployeeDTO> getEmployeeById(@PathVariable Long id) {
+        return ResponseEntity.ok(employeeService.getEmployeeById(id));
+    }
+
 }
