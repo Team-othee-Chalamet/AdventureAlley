@@ -15,7 +15,7 @@ public class Booking extends BaseEntity {
     String personEmail;
     String personPhoneNr;
 
-    @OneToMany (mappedBy = "booking", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @OneToMany (mappedBy = "booking", cascade = CascadeType.ALL)
     private List<Addon> addOns = new ArrayList<>();
 
     public Booking(){}
@@ -48,5 +48,25 @@ public class Booking extends BaseEntity {
 
     public void setPersonPhoneNr(String personPhoneNr) {
         this.personPhoneNr = personPhoneNr;
+    }
+
+    public List<Addon> getAddOns() {
+        return addOns;
+    }
+
+    public void addAddOn(Addon addon) {
+        addOns.add(addon);
+        addon.setBooking(this);
+    }
+
+    public void removeAddOn(Addon addon) {
+        addOns.remove(addon);
+        addon.setBooking(null);
+    }
+
+    public void clearAddOns() {
+        for (Addon addon : new ArrayList<>(addOns)) {
+            removeAddOn(addon);
+        }
     }
 }

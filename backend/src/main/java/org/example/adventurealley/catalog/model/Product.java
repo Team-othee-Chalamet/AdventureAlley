@@ -1,6 +1,7 @@
 package org.example.adventurealley.catalog.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
 import org.example.adventurealley.common.baseClasses.BaseEntity;
 
 @Entity
