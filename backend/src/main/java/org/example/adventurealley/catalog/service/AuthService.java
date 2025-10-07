@@ -3,6 +3,7 @@ package org.example.adventurealley.catalog.service;
 import org.example.adventurealley.catalog.dto.EmployeeDTO;
 import org.example.adventurealley.catalog.dto.EmployeeMapper;
 import org.example.adventurealley.catalog.dto.LoginRequestDTO;
+import org.example.adventurealley.catalog.dto.LoginResponseDTO;
 import org.example.adventurealley.catalog.model.Employee;
 import org.example.adventurealley.catalog.repository.EmployeeRepo;
 import org.example.adventurealley.catalog.utility.Hasher;
@@ -18,7 +19,7 @@ public class AuthService {
         this.employeeRepo = employeeRepo;
     }
 
-    public EmployeeDTO authenticate(LoginRequestDTO loginRequestDTO) {
+    public LoginResponseDTO authenticate(LoginRequestDTO loginRequestDTO) {
         String staffId = loginRequestDTO.staffId();
         String password = loginRequestDTO.password();
 
@@ -33,18 +34,16 @@ public class AuthService {
         if(!Hasher.encrypt(password).equals(foundEmployee.getPassword())) {
             throw new RuntimeException("Staff ID and password does not match");
         }
+        //Turn employee into a DTO
+        EmployeeDTO employeeDTO = EmployeeMapper.toDto(foundEmployee);
 
-        // If they match, return the found employee as a DTO
-        return EmployeeMapper.toDto(foundEmployee);
+        // Generate a (simple "fake") token
+        String returnToken = TokenService.generateToken(employeeDTO);
+
+        // Create the response and return it
+        LoginResponseDTO loginResponseDTO = new LoginResponseDTO(returnToken, employeeDTO);
+
+        return loginResponseDTO;
     }
 
-    // Optional helper to register new employees
-    /*
-    public Employee register(String username, String password) {
-        Employee e = new Employee();
-        e.setUsername(username);
-        e.setPassword(SimpleHasher.hash(password));
-        return employeeRepository.save(e);
-    }
- */
 }
