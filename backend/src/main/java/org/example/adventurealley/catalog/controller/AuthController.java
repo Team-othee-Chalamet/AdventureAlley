@@ -26,11 +26,14 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequestDTO) {
         try {
+            // Service checks if credentials match
             EmployeeDTO employeeDTO = authService.authenticate(loginRequestDTO);
+            // Returns ResponseEntity with mapped key / value pairs for token and employee
             return ResponseEntity.ok(Map.of(
                     "token", "FAKE-TOKEN-FOR-" +employeeDTO.staffId(),
                     "employee", employeeDTO
             ));
+            // If credentials don't match, returns an error message
         } catch (RuntimeException e) {
             return ResponseEntity.status(401).body(e.getMessage());
         }

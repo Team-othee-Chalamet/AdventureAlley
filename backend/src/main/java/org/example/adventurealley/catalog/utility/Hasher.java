@@ -5,7 +5,8 @@ public class Hasher {
     public static String encrypt(String password) {
         StringBuilder sb = new StringBuilder();
         for (char c : password.toCharArray()) {
-            sb.append((char)(c + 3)); // shift characters by 3
+            // Take value of character and multiply by length of password
+            sb.append((char)(c * password.length()));
         }
         return sb.toString();
     }
