@@ -1,7 +1,12 @@
 package org.example.adventurealley.catalog.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import org.example.adventurealley.catalog.dto.SessionDTO;
 import jakarta.persistence.OneToMany;
 import org.example.adventurealley.common.baseClasses.BaseEntity;
 
@@ -17,6 +22,9 @@ public class Booking extends BaseEntity {
 
     @OneToMany (mappedBy = "booking", cascade = CascadeType.ALL)
     private List<Addon> addOns = new ArrayList<>();
+
+    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Session> sessions = new ArrayList<>();
 
     public Booking(){}
 
@@ -68,5 +76,26 @@ public class Booking extends BaseEntity {
         for (Addon addon : new ArrayList<>(addOns)) {
             removeAddOn(addon);
         }
+    }
+
+    public List<Session> getSessions() {
+        return sessions;
+    }
+
+    public void addSession(Session session) {
+        sessions.add(session);
+        session.setBooking(this);
+    }
+
+    public void removeSession(Session session) {
+        sessions.remove(session);
+        session.setBooking(null);
+    }
+
+    public void removeAllSessions() {
+        for (Session session : sessions) {
+            session.setBooking(null);
+        }
+        sessions.clear();
     }
 }
