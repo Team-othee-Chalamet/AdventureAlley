@@ -52,7 +52,7 @@ public class EmployeeService {
         Employee foundEmployee = optionalEmployee.get();
         Employee newData = EmployeeMapper.toEntity(employeeDTO);
         foundEmployee.setName(newData.getName());
-        foundEmployee.setLastName(newData.getLastName());
+        foundEmployee.setSurname(newData.getSurname());
         foundEmployee.setStaffId(newData.getStaffId());
         foundEmployee.setPassword(newData.getPassword());
 

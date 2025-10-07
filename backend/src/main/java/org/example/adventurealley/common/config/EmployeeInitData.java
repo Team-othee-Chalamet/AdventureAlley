@@ -16,7 +16,7 @@ public class EmployeeInitData implements CommandLineRunner {
     @Override
     public void run(String... arg) {
         for (int i = 0; i < 10; i++) {
-            Employee employee = new Employee("Name" +i, "Last name" +i, "staffId" +i, "password" +i);
+            Employee employee = new Employee("Name" +i, "Surname" +i, "staffId" +i, "password" +i);
             employeeRepo.save(employee);
         }
     }

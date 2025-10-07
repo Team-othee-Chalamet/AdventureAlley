@@ -7,7 +7,7 @@ import org.example.adventurealley.common.baseClasses.BaseEntity;
 public class Employee extends BaseEntity {
 
     private String name;
-    private String lastName;
+    private String surname;
     private String staffId;
     private String password;
 
@@ -15,9 +15,9 @@ public class Employee extends BaseEntity {
 
     // Role as enum was causing a headache when making a DTO, so will come back
 
-    public Employee(String name, String lastName, String staffId, String password) {
+    public Employee(String name, String surname, String staffId, String password) {
         this.name = name;
-        this.lastName = lastName;
+        this.surname = surname;
         this.staffId = staffId;
         this.password = password;
     }
@@ -30,12 +30,12 @@ public class Employee extends BaseEntity {
         this.name = name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getStaffId() {
