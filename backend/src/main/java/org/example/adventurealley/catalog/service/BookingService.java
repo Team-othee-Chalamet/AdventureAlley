@@ -4,6 +4,7 @@ import org.example.adventurealley.catalog.dto.BookingDTO;
 import org.example.adventurealley.catalog.dto.BookingMapper;
 import org.example.adventurealley.catalog.exceptions.BookingNotFoundException;
 import org.example.adventurealley.catalog.model.Booking;
+import org.example.adventurealley.catalog.model.Session;
 import org.example.adventurealley.catalog.repository.BookingRepo;
 import org.springframework.stereotype.Service;
 
@@ -48,9 +49,17 @@ public class BookingService {
             throw new BookingNotFoundException("Booking could not be foind with id: " + id);
         }
         Booking foundBooking = optionalBooking.get();
-        foundBooking.setPersonName(bookingDTO.bookingName());
-        foundBooking.setPersonEmail(bookingDTO.bookingEmail());
-        foundBooking.setPersonPhoneNr(bookingDTO.bookingPhoneNr());
+        Booking newInfo = BookingMapper.toEntity(bookingDTO);
+
+        foundBooking.setPersonName(newInfo.getPersonName());
+        foundBooking.setPersonEmail(newInfo.getPersonEmail());
+        foundBooking.setPersonPhoneNr(newInfo.getPersonPhoneNr());
+        foundBooking.removeAllSessions();
+        for (Session s: newInfo.getSessions()){
+            foundBooking.addSession(s);
+        }
+
+
         return BookingMapper.toDto(bookingRepo.save(foundBooking));
     }
 
