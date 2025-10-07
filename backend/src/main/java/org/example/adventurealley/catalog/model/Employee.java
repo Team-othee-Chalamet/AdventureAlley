@@ -1,8 +1,11 @@
 package org.example.adventurealley.catalog.model;
 
 
+import jakarta.persistence.Entity;
+import org.example.adventurealley.common.baseClasses.BaseEntity;
 
-public class Employee {
+@Entity
+public class Employee extends BaseEntity {
     enum Role{ADMIN, REGULAR}
     private String name;
     private String lastName;

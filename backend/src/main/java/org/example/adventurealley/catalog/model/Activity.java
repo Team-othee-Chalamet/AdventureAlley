@@ -8,7 +8,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Activity {
+@Entity
+public class Activity extends BaseEntity {
 
     static public List<Session> getAvailableSessions(LocalDate startDate, LocalDate endDate){
         return new ArrayList<>();
