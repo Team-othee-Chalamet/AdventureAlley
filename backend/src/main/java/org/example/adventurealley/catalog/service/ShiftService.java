@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class ShiftService {
@@ -28,4 +30,12 @@ public class ShiftService {
         return shiftsDTOs;
     }
 
+    public Shift getShiftById(Long id) {
+
+        return shiftRepo.findById(id).orElseThrow(() -> new NoSuchElementException("Shift "+ id + "Not found"));
+    }
+
+    public void deleteShiftById(Long id) {
+    shiftRepo.deleteById(id);
+    }
 }
