@@ -42,12 +42,12 @@ public class SessionService {
         }
         return SessionMapper.toDTO(foundSession.get());
     }
+
     /*
     public SessionDTO createSession(SessionDTO sessionDTO) {
         return SessionMapper.toDTO(sessionRepo.save(SessionMapper.toEntity(sessionDTO)));
     }
-
-     */
+    */
 
     public List<SessionDTO> getAllSessionsInWeek(String startDateString, String endDateString){
         List<Session> allSessions = sessionRepo.findAll();
@@ -79,7 +79,6 @@ public class SessionService {
                 }
             }
         }
-
 
         unbookedSessions.removeAll(sessionsToRemove);
         List<Session> completeSessionList = unbookedSessions;
