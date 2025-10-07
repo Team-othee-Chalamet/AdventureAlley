@@ -4,11 +4,13 @@ import org.example.adventurealley.catalog.dto.EmployeeDTO;
 import org.example.adventurealley.catalog.dto.EmployeeMapper;
 import org.example.adventurealley.catalog.dto.LoginRequestDTO;
 import org.example.adventurealley.catalog.dto.LoginResponseDTO;
+import org.example.adventurealley.catalog.exceptions.InvalidTokenException;
 import org.example.adventurealley.catalog.model.Employee;
 import org.example.adventurealley.catalog.repository.EmployeeRepo;
 import org.example.adventurealley.catalog.utility.Hasher;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.Optional;
 
 @Service
@@ -19,7 +21,7 @@ public class AuthService {
         this.employeeRepo = employeeRepo;
     }
 
-    public LoginResponseDTO authenticate(LoginRequestDTO loginRequestDTO) {
+    public LoginResponseDTO authenticateLogin(LoginRequestDTO loginRequestDTO) {
         String staffId = loginRequestDTO.staffId();
         String password = loginRequestDTO.password();
 
@@ -46,4 +48,35 @@ public class AuthService {
         return loginResponseDTO;
     }
 
+    public EmployeeDTO tokenAuthentication(String authHeader) {
+        // Check if there is a header
+        if (authHeader == null || !authHeader.startsWith("Bearer")) {
+            throw new InvalidTokenException("Invalid or missing token");
+        }
+
+        // Remove redundant info
+        String token = authHeader.replace("Bearer FAKE-TOKEN-FOR-", "");
+
+        try {
+            // Split string into staffId and time for expiration as instant
+            String[] parts = token.split("-Expires:");
+            String staffId = parts[0];
+            Instant expiry = Instant.parse(parts[1]);
+
+            if (Instant.now().isAfter(expiry)) {
+                throw new InvalidTokenException("Token expired");
+            }
+
+            Optional<Employee> optionalEmployee = employeeRepo.findByStaffId(staffId);
+            if (!optionalEmployee.isPresent()){
+                throw new RuntimeException("No employee with ID "+ staffId);
+            }
+
+            EmployeeDTO foundEmployee = EmployeeMapper.toDto(optionalEmployee.get());
+
+            return foundEmployee;
+        } catch (Exception e) {
+            throw new RuntimeException("Invalid token");
+        }
+    }
 }
