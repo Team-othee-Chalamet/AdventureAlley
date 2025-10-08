@@ -1,4 +1,7 @@
 package org.example.adventurealley.catalog.repository;
 
-public interface EmployeeRepo {
+import org.example.adventurealley.catalog.model.Employee;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface EmployeeRepo extends JpaRepository<Employee, Long> {
 }

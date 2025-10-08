@@ -26,6 +26,10 @@ public class Shift extends BaseEntity {
     public Shift() {
     }
 
+    public Shift(LocalDate date, LocalTime startTime, LocalTime endTime, Employee employee, Activity activity) {
+        super();
+    }
+
     public LocalDate getDate() {
         return date;
     }
