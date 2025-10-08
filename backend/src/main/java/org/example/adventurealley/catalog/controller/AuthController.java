@@ -3,12 +3,10 @@ package org.example.adventurealley.catalog.controller;
 import org.example.adventurealley.catalog.dto.EmployeeDTO;
 import org.example.adventurealley.catalog.dto.LoginRequestDTO;
 import org.example.adventurealley.catalog.dto.LoginResponseDTO;
+import org.example.adventurealley.catalog.exceptions.InvalidTokenException;
 import org.example.adventurealley.catalog.service.AuthService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -28,16 +26,23 @@ public class AuthController {
             // Service checks if credentials match
             LoginResponseDTO loginResponseDTO = authService.authenticateLogin(loginRequestDTO);
 
-            EmployeeDTO employeeDTO = loginResponseDTO.employeeDTO();
-            String token = loginResponseDTO.token();
-
             // Returns ResponseEntity with mapped key / value pairs for token and employee
             return ResponseEntity.ok(Map.of(
-                    "token", token,
-                    "employee", employeeDTO
+                    "token", loginResponseDTO.token(),
+                    "employee", loginResponseDTO.employeeDTO()
             ));
             // If credentials don't match, returns an error message
         } catch (RuntimeException e) {
+            return ResponseEntity.status(401).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/testToken")
+    public ResponseEntity<?> testToken(@RequestHeader("Authorization") String authHeader) {
+        System.out.println("testToken recieved request: "+authHeader);
+        try {
+            return ResponseEntity.ok(authService.authenticateToken(authHeader));
+        } catch (InvalidTokenException e) {
             return ResponseEntity.status(401).body(e.getMessage());
         }
     }

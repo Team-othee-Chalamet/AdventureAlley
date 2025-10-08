@@ -48,7 +48,8 @@ public class AuthService {
         return loginResponseDTO;
     }
 
-    public EmployeeDTO tokenAuthentication(String authHeader) {
+    public EmployeeDTO authenticateToken(String authHeader) {
+        System.out.println("Trying to authenticate: "+authHeader);
         // Check if there is a header
         if (authHeader == null || !authHeader.startsWith("Bearer")) {
             throw new InvalidTokenException("Invalid or missing token");
@@ -58,8 +59,8 @@ public class AuthService {
         String token = authHeader.replace("Bearer FAKE-TOKEN-FOR-", "");
 
         try {
-            // Split string into staffId and time for expiration as instant
-            String[] parts = token.split("-Expires:");
+            // Split string into staffId and time for expiration (as instant)
+            String[] parts = token.split(" - Expires: ");
             String staffId = parts[0];
             Instant expiry = Instant.parse(parts[1]);
 
@@ -69,14 +70,14 @@ public class AuthService {
 
             Optional<Employee> optionalEmployee = employeeRepo.findByStaffId(staffId);
             if (!optionalEmployee.isPresent()){
-                throw new RuntimeException("No employee with ID "+ staffId);
+                throw new InvalidTokenException("No employee with ID "+ staffId);
             }
 
             EmployeeDTO foundEmployee = EmployeeMapper.toDto(optionalEmployee.get());
 
             return foundEmployee;
         } catch (Exception e) {
-            throw new RuntimeException("Invalid token");
+            throw new InvalidTokenException("Invalid token");
         }
     }
 }
