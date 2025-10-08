@@ -39,7 +39,7 @@ public class AuthController {
 
     @PostMapping("/testToken")
     public ResponseEntity<?> testToken(@RequestHeader("Authorization") String authHeader) {
-        System.out.println("testToken recieved request: "+authHeader);
+        // System.out.println("testToken recieved request: "+authHeader);
         try {
             return ResponseEntity.ok(authService.authenticateToken(authHeader));
         } catch (InvalidTokenException e) {

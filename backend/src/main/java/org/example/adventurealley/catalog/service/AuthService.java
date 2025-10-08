@@ -49,7 +49,7 @@ public class AuthService {
     }
 
     public EmployeeDTO authenticateToken(String authHeader) {
-        System.out.println("Trying to authenticate: "+authHeader);
+        // System.out.println("Trying to authenticate: "+authHeader);
         // Check if there is a header
         if (authHeader == null || !authHeader.startsWith("Bearer")) {
             throw new InvalidTokenException("Invalid or missing token");
@@ -64,10 +64,12 @@ public class AuthService {
             String staffId = parts[0];
             Instant expiry = Instant.parse(parts[1]);
 
+            // Check token is not expired
             if (Instant.now().isAfter(expiry)) {
                 throw new InvalidTokenException("Token expired");
             }
 
+            // Check if staffId exists
             Optional<Employee> optionalEmployee = employeeRepo.findByStaffId(staffId);
             if (!optionalEmployee.isPresent()){
                 throw new InvalidTokenException("No employee with ID "+ staffId);
