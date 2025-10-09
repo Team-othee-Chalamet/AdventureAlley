@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" href="#">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  <h1>Shifts</h1>
+
+  <!-- CREATE (POST /api/shifts with @RequestParam) -->
+  <h2>Create</h2>
+  <form action="http://localhost:8080/api/shifts" method="post" id="createShiftForm">
+    <label>Date <input type="date" name="date" required></label><br>
+    <label>Start <input type="time" name="startTime" required></label><br>
+    <label>End <input type="time" name="endTime" required></label><br>
+    <label>Employee ID (optional) <input type="number" name="employeeId"></label><br>
+    <label>Activity ID (optional) <input type="number" name="activityId"></label><br>
+    <button type="submit">Create shift</button>
+  </form>
+
+<table id="shiftTable" style="width:100%" border="1" cellpadding="8">
+    <thead>
+<tr>
+<th>Mandag</th>
+<th>Tirsdag</th>
+<th>Onsdag</th>
+<th>Torsdag</th>
+<th>Fredag</th>
+<th>Lørdag</th>
+<th>Søndag</th>
+</tr>
+</thead>
+<tbody id="rows"></tbody>
+</table>
+
+
+  <!-- LIST (opens JSON in the browser) -->
+  <h2>List</h2>
+  <a href="http://localhost:8080/api/shifts">Open /api/shifts</a>
+
+
+  <script src="/scheduleApp.js" defer></script>
+</body>
+</html>
