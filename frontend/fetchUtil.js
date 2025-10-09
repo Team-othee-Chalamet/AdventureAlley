@@ -12,7 +12,7 @@ function createFetchOptions(httpMethod, body, headers = {}){
     // Not all requests require a body, hence the if statement
     if (body){
         // Converts the object to a JSON string
-        options.body = JSON.stringify[body];
+        options.body = JSON.stringify(body);
         options.headers["Content-Type"] = "application/json";
     }
     return options;
