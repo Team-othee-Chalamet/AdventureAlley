@@ -5,9 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d3726f9d-afab-442a-8309-205b2b2b3481" name="Changes" comment="Init commit">
+      <change afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/adventurealley/common/config/WebConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/org/example/adventurealley/catalog/model/Shift.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/adventurealley/catalog/model/Shift.java" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/org/example/adventurealley/common/config/SessionInitData.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/org/example/adventurealley/common/config/SessionInitData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/booking.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/booking.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/pages/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/pages/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/script.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/style.css" afterDir="false" />
+>>>>>>> 82513c7e16731bfcef59ed9b4e017406ae906b63
     </list>
+    <list id="17e50392-32ee-4a33-a2fe-7694a1a3f6dd" name="Changes by frede" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -37,6 +47,7 @@
   &quot;associatedIndex&quot;: 0
 }</component>
   <component name="ProjectId" id="33MlzQ8KGLS5kH959CSNPamtorZ" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
