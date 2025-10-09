@@ -1,6 +1,6 @@
 package org.example.adventurealley.catalog.controller;
 
-import org.example.adventurealley.catalog.model.Product;
+import org.example.adventurealley.catalog.dto.ProductDTO;
 import org.example.adventurealley.catalog.service.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +18,13 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Product>> findAll() {
+    public ResponseEntity<List<ProductDTO>> findAll() {
         return ResponseEntity.ok(productService.findAll());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id){
-        Product product = productService.findById(id);
+        ProductDTO product = productService.findById(id);
         try {
             return ResponseEntity.ok(product);
         } catch (RuntimeException e) {
@@ -33,9 +33,17 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Product> save(@RequestBody Product product){
-        Product savedProduct = productService.createProduct(product);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedProduct);
+    public ResponseEntity<ProductDTO> createProduct(@RequestBody ProductDTO productDto){
+        return ResponseEntity.ok(productService.createProduct(productDto));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductDTO> updateProduct(@PathVariable Long id, @RequestBody ProductDTO productDTO){
+        try {
+            return ResponseEntity.ok(productService.updateProduct(id, productDTO));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
 
     @DeleteMapping("/{id}")

@@ -16,7 +16,9 @@ public class Addon extends BaseEntity {
 
     public Addon() {}
 
-    public Addon(int quantity) {
+    public Addon(Booking booking, Product product, int quantity) {
+        this.booking = booking;
+        this.product = product;
         this.quantity = quantity;
     }
 

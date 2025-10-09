@@ -1,5 +1,6 @@
 package org.example.adventurealley.catalog.dto;
 
+import org.example.adventurealley.catalog.model.Addon;
 import org.example.adventurealley.catalog.model.Booking;
 import org.example.adventurealley.catalog.model.Session;
 
@@ -14,8 +15,12 @@ public class BookingMapper {
             sessionDTOs.add(SessionMapper.toDTO(s));
         }
 
+        List<AddonDTO> addonDTOs = new ArrayList<>();
+        for (Addon addon : booking.getAddOns()) {
+            addonDTOs.add(toDto(addon));
+        }
 
-        return new BookingDTO(booking.getPersonName(), booking.getPersonEmail(), booking.getPersonPhoneNr(), sessionDTOs);
+        return new BookingDTO(booking.getPersonName(), booking.getPersonEmail(), booking.getPersonPhoneNr(), sessionDTOs, addonDTOs);
     }
 
     static public Booking toEntity(BookingDTO bookingDTO){
@@ -28,7 +33,22 @@ public class BookingMapper {
             booking.addSession(SessionMapper.toEntity(sessionDTO, booking));
         }
 
+        for(AddonDTO addonDTO : bookingDTO.addonDTOs()){
+            booking.addAddOn(toEntity(addonDTO));
+        }
 
         return booking;
+    }
+
+    static public AddonDTO toDto(Addon addon) {
+        return new AddonDTO(addon.getId(), addon.getBooking(), addon.getProduct(), addon.getQuantity());
+    }
+
+    static public Addon toEntity(AddonDTO addonDTO) {
+        Addon addon = new Addon();
+        addon.setBooking(addonDTO.booking());
+        addon.setProduct(addonDTO.product());
+        addon.setQuantity(addonDTO.quantity());
+        return addon;
     }
 }
