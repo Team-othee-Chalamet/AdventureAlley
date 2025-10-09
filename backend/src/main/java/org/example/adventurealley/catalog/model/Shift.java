@@ -16,11 +16,11 @@ public class Shift extends BaseEntity {
     private LocalTime endTime;
 
     @ManyToOne
-    @JoinColumn(name = "empoyeeId", nullable = true)
+    @JoinColumn(name = "empoyeeId")
     private Employee employee;
 
     @ManyToOne
-    @JoinColumn(name = "activityId", nullable = true)
+    @JoinColumn(name = "activityId")
     private Activity activity;
 
     public Shift() {

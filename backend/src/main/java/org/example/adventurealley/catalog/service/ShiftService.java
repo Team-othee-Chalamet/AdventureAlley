@@ -19,11 +19,12 @@ import java.util.Optional;
 @Service
 public class ShiftService {
 
-    ShiftRepo shiftRepo;
-    EmployeeRepo employeeRepo;
+    private final ShiftRepo shiftRepo;
+    private final EmployeeRepo employeeRepo;
 
-    public ShiftService(ShiftRepo shiftRepo) {
+    public ShiftService(ShiftRepo shiftRepo, EmployeeRepo employeeRepo) {
         this.shiftRepo = shiftRepo;
+        this.employeeRepo = employeeRepo;
     }
     public List<ShiftDTO> getAllShifts(){
         List<Shift> shiftSession = shiftRepo.findAll();
