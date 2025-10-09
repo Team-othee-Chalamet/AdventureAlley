@@ -1,0 +1,40 @@
+.videoSegment{
+        height: 500px;
+        overflow: hidden ;
+        display: flex;
+        
+        justify-content: center;
+        align-items: center;
+
+        box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.636);
+
+        #landingVideo{
+            position: relative;
+            justify-content: center;
+            max-width: 100%;
+            filter: brightness(.9);
+        }
+        .videoOverlay{
+            h1{
+                padding: 0;
+                margin: 0;
+            }
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+
+            position: absolute;
+            left: 5%;
+            background-color: rgba(255, 255, 255, .2);
+            backdrop-filter: blur(15px);
+            border-radius: 6px;
+            padding: 30px;
+            width: 300px;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.425), inset 1px 1px rgba(255, 255, 255, 0.404), inset -1px -1px rgba(0, 0, 0, 0.377);
+            color: white;
+
+            
+        }
+    }
