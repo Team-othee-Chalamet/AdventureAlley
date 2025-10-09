@@ -1,0 +1,184 @@
+.bookingSegment{
+    display: flex;
+    flex-direction: row;
+
+    gap: 5%;
+    justify-content: center;
+    padding: 30px;
+}
+
+.calendarBox{
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 10px;
+
+    width: 40%;
+
+}
+
+.calendar{
+    display: grid;
+    grid-template-columns: 1fr 8fr;
+    box-sizing: border-box;
+    border-radius: 5px;
+    border: 1px solid black;
+    background-color: lightblue;
+
+    overflow: hidden;
+}
+
+.timeLabels{
+    grid-template-rows: span 1;
+    border-right: 1px solid black;
+}
+
+.timeLabel{
+    box-sizing: border-box;
+    border-bottom: 1px solid black;
+    height: 30px;
+    padding: 5px;
+    text-align: right;
+}
+
+.activities{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.column{
+    position: relative;
+    border-right: 1px dashed rgb(116, 116, 116);
+    background-color: white;
+}
+
+.timeSlot{
+    position: absolute;
+    width: 100%;
+    top: calc(30px * var(--start));
+    height: calc(30px * var(--duration));
+    display: grid;
+    grid-template-rows: 1fr;
+}
+
+.session{
+    height: auto;
+    padding: 5px;
+    border-radius: 5px;
+    margin: 2px;
+    border: 1px solid black;
+}
+
+.booked.paintBall,
+.booked.miniGolf,
+.booked.goKart,
+.booked.sumo{
+    border: 2px solid red;
+    background-color: rgb(255, 197, 197);
+}
+
+.paintBall{
+    background-color: rgb(217, 217, 255);
+    border: 2px solid blue;
+}
+
+
+.miniGolf{
+    background-color: rgb(252, 255, 224);
+    border: 2px solid yellow;
+}
+
+.sumo{
+    background-color: rgb(255, 224, 254);
+    border: 2px solid rgb(255, 0, 238);
+}
+
+.goKart{
+    background-color: rgb(224, 255, 235);
+    border: 2px solid rgb(0, 255, 64);
+}
+
+
+
+.bookingBox{
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+
+    width: 40%;
+
+    form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+
+        width: 90%;
+
+        input{
+            width: 50%;
+        }
+
+        .valgteBookings{
+            border-radius: 5px;
+            border: 1px solid black;
+            padding: 10px;
+            width: 100%;
+
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 10px;
+
+            box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.224);
+
+            .booking{
+                display: flex;
+                flex-direction: column;
+                padding: 10px;
+                padding-right: 20px;
+                width: auto;
+                max-width:max-content;
+                border-radius: 4px;
+                position: relative;
+
+                box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.395);
+
+                .removeButton{
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 7px;
+                    width: 7px;
+                    padding: 5px;
+                    position: absolute;
+                    border-radius: 520px;
+                    background-color: red;
+                    font-family: webdings;
+                    top: -8px;
+                    right: -8px;
+                    color: white;
+
+                    border: 1px solid rgb(177, 34, 34);
+
+                    cursor: pointer;
+
+                }
+            }
+
+            .goKart{
+                background-image: linear-gradient(to bottom, rgb(255, 255, 233), rgb(255, 255, 217));
+                background-color: rgb(255, 255, 233);
+                border: 2px solid rgb(245, 230, 114);
+            }
+        }
+    }
+
+
+
+}
