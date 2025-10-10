@@ -35,9 +35,11 @@ public class BookingMapper {
             booking.addSession(SessionMapper.toEntity(sessionDTO, booking));
         }
 
+        /*
         for(AddonDTO addonDTO : bookingDTO.addonDTOs()){
             booking.addAddOn(toEntity(addonDTO));
         }
+        */
 
         return booking;
     }
