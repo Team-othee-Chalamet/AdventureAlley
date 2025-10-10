@@ -1,5 +1,6 @@
 package org.example.adventurealley.catalog.controller;
 
+import org.example.adventurealley.catalog.dto.AddonDTO;
 import org.example.adventurealley.catalog.dto.BookingDTO;
 import org.example.adventurealley.catalog.model.Booking;
 import org.example.adventurealley.catalog.service.BookingService;
@@ -49,4 +50,19 @@ public class BookingController {
         bookingService.deleteBooking(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/{id}/addons")
+    public ResponseEntity<BookingDTO> addAddon(@PathVariable Long id, @RequestBody AddonDTO addonDTO){
+        try {
+            return ResponseEntity.ok(bookingService.addAddon(id, addonDTO));
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @DeleteMapping("/{id}/addons/{addonId}")
+    public ResponseEntity<BookingDTO> removeAddon(@PathVariable Long id, @PathVariable Long addonId){
+        return ResponseEntity.ok(bookingService.removeAddon(id, addonId));
+    }
+
 }

@@ -1,4 +1,3 @@
 package org.example.adventurealley.catalog.dto;
 
-public class ProductDTO {
-}
+public record ProductDTO(Long id, String name, double price, String amount, String description) {}
