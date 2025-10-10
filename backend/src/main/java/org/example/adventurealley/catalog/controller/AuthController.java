@@ -23,7 +23,6 @@ public class AuthController {
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequestDTO) {
         try {
             // Service checks if credentials match
-            System.out.println("AuthController");
             LoginResponseDTO loginResponseDTO = authService.authenticateLogin(loginRequestDTO);
 
             // Returns ResponseEntity with mapped key / value pairs for token and employee
@@ -33,14 +32,12 @@ public class AuthController {
             ));
             // If credentials don't match, returns an error message
         } catch (RuntimeException e) {
-            System.out.println("AuthController error");
             return ResponseEntity.status(401).body(e.getMessage());
         }
     }
 
     @PostMapping("/validateToken")
     public ResponseEntity<?> testToken(@RequestHeader("Authorization") String authHeader) {
-        // System.out.println("testToken recieved request: "+authHeader);
         try {
             return ResponseEntity.ok(authService.authenticateToken(authHeader));
         } catch (InvalidTokenException e) {

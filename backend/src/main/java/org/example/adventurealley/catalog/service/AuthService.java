@@ -50,7 +50,7 @@ public class AuthService {
     }
 
     public EmployeeDTO authenticateToken(String authHeader) {
-        // System.out.println("Trying to authenticate: "+authHeader);
+        System.out.println("Trying to authenticate: "+authHeader);
         // Check if there is a header
         if (authHeader == null || !authHeader.startsWith("Bearer")) {
             throw new InvalidTokenException("Invalid or missing token");
