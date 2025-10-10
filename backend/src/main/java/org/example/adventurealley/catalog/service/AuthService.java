@@ -22,6 +22,7 @@ public class AuthService {
     }
 
     public LoginResponseDTO authenticateLogin(LoginRequestDTO loginRequestDTO) {
+        System.out.println("AuthService: authenticateLogin");
         String staffId = loginRequestDTO.staffId();
         String password = loginRequestDTO.password();
 
@@ -81,5 +82,33 @@ public class AuthService {
         } catch (Exception e) {
             throw new InvalidTokenException("Invalid token");
         }
+    }
+
+    public boolean authenticateTokenBoolean(String authHeader) {
+        if (authHeader == null || !authHeader.startsWith("Bearer")) {
+            return false;
+        }
+
+        // Remove redundant info
+        String token = authHeader.replace("Bearer FAKE-TOKEN-FOR-", "");
+
+
+            // Split string into staffId and time for expiration (as instant)
+            String[] parts = token.split(" - Expires: ");
+            String staffId = parts[0];
+            Instant expiry = Instant.parse(parts[1]);
+
+            // Check token is not expired
+            if (Instant.now().isAfter(expiry)) {
+                return false;
+            }
+
+            // Check if staffId exists
+            Optional<Employee> optionalEmployee = employeeRepo.findByStaffId(staffId);
+            if (!optionalEmployee.isPresent()){
+                return false;
+            }
+
+            return true;
     }
 }

@@ -13,4 +13,18 @@ public class TokenService {
 
         return "FAKE-TOKEN-FOR-"+employeeDTO.staffId()+" - Expires: "+expiration.toString();
     }
+
+    public static String getStaffIdFromToken(String token) {
+        token.replace("Bearer FAKE-TOKEN-FOR-", "");
+        String[] parts = token.split(" - Expires: ");
+        String staffId = parts[0];
+        return staffId;
+    }
+
+    public Instant getExpirationFromToken(String token) {
+        token.replace("Bearer FAKE-TOKEN-FOR-", "");
+        String[] parts = token.split(" - Expires: ");
+        Instant expiration = Instant.parse(parts[1]);
+        return expiration;
+    }
 }

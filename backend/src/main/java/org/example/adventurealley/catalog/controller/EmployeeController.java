@@ -1,6 +1,8 @@
 package org.example.adventurealley.catalog.controller;
 
 import org.example.adventurealley.catalog.dto.EmployeeDTO;
+import org.example.adventurealley.catalog.exceptions.InvalidTokenException;
+import org.example.adventurealley.catalog.service.AuthService;
 import org.example.adventurealley.catalog.service.EmployeeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,9 +13,16 @@ import java.util.List;
 @RequestMapping("/api/employees")
 public class EmployeeController {
     EmployeeService employeeService;
+    AuthService authService;
 
-    public EmployeeController(EmployeeService employeeService){
+    public EmployeeController(EmployeeService employeeService, AuthService authService){
         this.employeeService = employeeService;
+        this.authService = authService;
+    }
+
+    @ModelAttribute
+    public void validateToken(@RequestHeader("Authorization") String authHeader) {
+        authService.authenticateToken(authHeader);
     }
 
     @GetMapping
