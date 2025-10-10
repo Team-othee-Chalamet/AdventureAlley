@@ -1,7 +1,17 @@
 package org.example.adventurealley.catalog.service;
 
-import org.springframework.stereotype.Service;
+import org.example.adventurealley.catalog.dto.ProductDTO;
 
-@Service
-public class ProductService {
+import java.util.List;
+
+public interface ProductService {
+    List<ProductDTO> findAll();
+
+    ProductDTO findById(Long id);
+
+    ProductDTO createProduct(ProductDTO productDTO);
+
+    ProductDTO updateProduct(Long id, ProductDTO productDTO);
+
+    void deleteById(Long id);
 }
