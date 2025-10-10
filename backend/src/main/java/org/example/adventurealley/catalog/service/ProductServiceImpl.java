@@ -54,7 +54,7 @@ public class ProductServiceImpl implements ProductService {
             updatedProduct.setPrice(product.getPrice());
             updatedProduct.setAmount(product.getAmount());
             updatedProduct.setDescription(product.getDescription());
-            return ProductMapper.toDto(updatedProduct);
+            return ProductMapper.toDto(productRepo.save(updatedProduct));
         }
 
         throw new RuntimeException("Varen blev ikke fundet");

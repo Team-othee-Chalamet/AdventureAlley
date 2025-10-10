@@ -60,11 +60,12 @@ public class BookingService {
         for (Session s: newInfo.getSessions()){
             foundBooking.addSession(s);
         }
+        /*
         foundBooking.clearAddOns();
         for (Addon a: newInfo.getAddOns()){
             foundBooking.addAddOn(a);
         }
-
+        */
         return BookingMapper.toDto(bookingRepo.save(foundBooking));
     }
 

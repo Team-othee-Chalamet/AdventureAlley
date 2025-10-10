@@ -15,12 +15,14 @@ public class BookingMapper {
             sessionDTOs.add(SessionMapper.toDTO(s));
         }
 
+        /*
         List<AddonDTO> addonDTOs = new ArrayList<>();
         for (Addon addon : booking.getAddOns()) {
             addonDTOs.add(toDto(addon));
         }
-
-        return new BookingDTO(booking.getPersonName(), booking.getPersonEmail(), booking.getPersonPhoneNr(), sessionDTOs, addonDTOs);
+        */
+        // addonDTOs skal tilføjes igen
+        return new BookingDTO(booking.getPersonName(), booking.getPersonEmail(), booking.getPersonPhoneNr(), sessionDTOs);
     }
 
     static public Booking toEntity(BookingDTO bookingDTO){
