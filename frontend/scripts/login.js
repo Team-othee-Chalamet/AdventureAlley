@@ -7,9 +7,7 @@ document.addEventListener("DOMContentLoaded", initApp);
 import { post } from "../fetchUtil.js"
 
 function initApp(){
-    
     initLogin();
-
 }
 
 //Add eventlistener to the form
@@ -35,6 +33,8 @@ async function handleLogin(event) {
         //Redirect to landing page
         window.location.href = "employeeLanding.html";
     } catch (error) {
+        event.target.password.value = "";
         console.error("Login failed:", error.message);
+        alert("Forkert adgangskode eller brugernavn.");
     }
 }
