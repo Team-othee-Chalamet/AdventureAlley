@@ -1,6 +1,9 @@
 package org.example.adventurealley.catalog.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.example.adventurealley.catalog.dto.EmployeeDTO;
+import org.example.adventurealley.catalog.exceptions.InvalidTokenException;
+import org.example.adventurealley.catalog.service.AuthService;
 import org.example.adventurealley.catalog.service.EmployeeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,9 +14,18 @@ import java.util.List;
 @RequestMapping("/api/employees")
 public class EmployeeController {
     EmployeeService employeeService;
+    AuthService authService;
 
-    public EmployeeController(EmployeeService employeeService){
+    public EmployeeController(EmployeeService employeeService, AuthService authService){
         this.employeeService = employeeService;
+        this.authService = authService;
+    }
+
+    @ModelAttribute
+    //Before any request in the EmployeeController, it checks the token and sets currentUser based on the token
+    public void validateToken(@RequestHeader("Authorization") String authHeader, HttpServletRequest httpRequest) {
+        EmployeeDTO requestingEmployee = authService.authenticateToken(authHeader);
+        httpRequest.setAttribute("currentUser", requestingEmployee);
     }
 
     @GetMapping
@@ -42,5 +54,10 @@ public class EmployeeController {
     ResponseEntity<EmployeeDTO> deleteEmployee(@PathVariable Long id) {
         employeeService.deleteEmployee(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/currentUser")
+    ResponseEntity<EmployeeDTO> getCurrentUser(@RequestAttribute("currentUser") EmployeeDTO currentUser) {
+        return ResponseEntity.ok(currentUser);
     }
 }
