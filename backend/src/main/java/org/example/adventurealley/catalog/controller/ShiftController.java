@@ -4,11 +4,13 @@ import org.example.adventurealley.catalog.dto.ShiftDTO;
 import org.example.adventurealley.catalog.model.Activity;
 import org.example.adventurealley.catalog.model.Employee;
 import org.example.adventurealley.catalog.model.Shift;
+import org.example.adventurealley.catalog.model.activities.ActivityType;
 import org.example.adventurealley.catalog.repository.ActivityRepo;
 import org.example.adventurealley.catalog.repository.EmployeeRepo;
 import org.example.adventurealley.catalog.service.ShiftService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,16 +40,24 @@ public class ShiftController {
     }
 
     @PostMapping
-    public ShiftDTO createShift(@RequestParam LocalDate date,
-                                @RequestParam LocalTime startTime,
-                                @RequestParam LocalTime endTime,
-                                @RequestParam Long  employeeId,
-                                @RequestParam Long activityId){
-        Employee emp = (employeeId!=null) ? employeeRepo.findById(employeeId).orElse(null) : null; // noget midlertidigt chat kode som sørger for employee or activity kan være null
-        Activity act = (activityId!=null) ? activityRepo.findById(activityId).orElse(null) : null;
-        System.out.println("createShift() i shiftController.java er kørt");
-        return shiftService.createShift(date, startTime, endTime, emp, act);
+    public ShiftDTO createShift(
+            @RequestParam("date")
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
+
+            @RequestParam("startTime")
+            @DateTimeFormat(pattern = "HH:mm") LocalTime startTime,
+
+            @RequestParam("endTime")
+            @DateTimeFormat(pattern = "HH:mm") LocalTime endTime,
+
+            @RequestParam("employeeId") Long employeeId
+    ) {
+        System.out.println("IN: date=" + date + ", start=" + startTime +
+                ", end=" + endTime + ", empId=" + employeeId);
+        Employee emp = employeeRepo.findById(employeeId).orElse(null);
+        return shiftService.createShift(date, startTime, endTime, emp);
     }
+
 
     @GetMapping("/{id}")
     private Shift getShiftById(@PathVariable Long id){

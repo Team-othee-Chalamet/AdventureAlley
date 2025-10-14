@@ -2,7 +2,6 @@ package org.example.adventurealley.catalog.service;
 
 import org.example.adventurealley.catalog.dto.ShiftDTO;
 import org.example.adventurealley.catalog.dto.ShiftMapper;
-import org.example.adventurealley.catalog.model.Activity;
 import org.example.adventurealley.catalog.model.Employee;
 import org.example.adventurealley.catalog.model.Shift;
 import org.example.adventurealley.catalog.repository.EmployeeRepo;
@@ -14,7 +13,6 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 public class ShiftService {
@@ -57,9 +55,11 @@ public class ShiftService {
         System.out.println("Employee updated");
     }
 
-    public ShiftDTO createShift(LocalDate date, LocalTime startTime, LocalTime endTime, Employee employee, Activity activity) {
-        Shift shift = new Shift(date, startTime, endTime, employee, activity);
+    public ShiftDTO createShift(LocalDate date, LocalTime startTime, LocalTime endTime, Employee employee) {
+        Shift shift = new Shift(date, startTime, endTime, employee);
+        System.out.println("CrateShift i ShiftService");
+        System.out.println("Shift = "+shift);
         shiftRepo.save(shift);
-        return new ShiftDTO(date, startTime, endTime, employee, activity);
+        return new ShiftDTO(date, startTime, endTime, employee);
     }
 }

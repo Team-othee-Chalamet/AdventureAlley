@@ -1,6 +1,7 @@
 package org.example.adventurealley.catalog.model;
 
 import jakarta.persistence.*;
+import org.example.adventurealley.catalog.model.activities.ActivityType;
 import org.example.adventurealley.common.baseClasses.BaseEntity;
 import org.springframework.cglib.core.Local;
 
@@ -14,20 +15,24 @@ public class Shift extends BaseEntity {
     private LocalDate date;
     private LocalTime startTime;
     private LocalTime endTime;
+    private ActivityType activityType;
 
     @ManyToOne
     @JoinColumn(name = "empoyeeId")
     private Employee employee;
 
-    @ManyToOne
-    @JoinColumn(name = "activityId")
-    private Activity activity;
-
     public Shift() {
     }
 
-    public Shift(LocalDate date, LocalTime startTime, LocalTime endTime, Employee employee, Activity activity) {
+    public Shift(LocalDate date, LocalTime startTime, LocalTime endTime, Employee employee, ActivityType activityType) {
         super();
+    }
+
+    public Shift(LocalDate date, LocalTime startTime, LocalTime endTime, Employee employee) {
+        this.date = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.employee = employee;
     }
 
     public LocalDate getDate() {
@@ -50,8 +55,8 @@ public class Shift extends BaseEntity {
         this.employee = employee;
     }
 
-    public void setActivity(Activity activity) {
-        this.activity = activity;
+    public void setActivityType(ActivityType activity) {
+        this.activityType = activity;
     }
 
     public LocalTime getStartTime() {
@@ -66,7 +71,18 @@ public class Shift extends BaseEntity {
         return employee;
     }
 
-    public Activity getActivity() {
-        return activity;
+    public ActivityType getActivityType() {
+        return activityType;
+    }
+
+    @Override
+    public String toString() {
+        return "Shift{" +
+                "employee=" + employee +
+                ", activityType=" + activityType +
+                ", endTime=" + endTime +
+                ", startTime=" + startTime +
+                ", date=" + date +
+                '}';
     }
 }
