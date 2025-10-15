@@ -18,8 +18,6 @@ async function getCurrentUser() {
     return response;
 }
 
-
-
 async function initEmployeeLanding() {
     // If there is no user, redirect to login page
     try {
@@ -42,16 +40,26 @@ async function initEmployeeLanding() {
 
 async function handleManageBookings(clickevent) {
     const table = document.getElementById("bookingsTable");
-    table.innerHTML = ""; // Clear existing table content
+    
+    // If table is empty, fill it, else empty it
+    if (table.innerHTML === "") {
     const bookings = await get("http://localhost:8080/api/bookings");
     console.log(bookings);
     displayBookings(bookings);
+} else {
+    table.innerHTML = "";
+}
 }
 
 function displayBookings(bookings) {
     const table = document.getElementById("bookingsTable");
   
     const header = document.createElement("thead");
+    
+    const thDate = document.createElement("th");
+    thDate.textContent = "Dato";
+    header.appendChild(thDate);
+
     const thName = document.createElement("th");
     thName.textContent = "Navn";
     header.appendChild(thName);
@@ -69,7 +77,7 @@ function displayBookings(bookings) {
     header.appendChild(thSessions);
 
     const thAddons = document.createElement("th");
-    thAddons.textContent = "Addons";
+    thAddons.textContent = "Tilkøb";
     header.appendChild(thAddons); 
 
     table.appendChild(header);
@@ -84,6 +92,15 @@ function displayBooking(booking) {
         const table = document.getElementById("bookingsTable");
 
         const row = document.createElement("tr");
+
+        // InitData has bookings without sessions
+        const date = document.createElement("td");
+        if (!booking.sessionDtos[0]){
+            date.textContent = "Ingen sessioner";
+        } else {
+        date.textContent = booking.sessionDtos[0].date;
+    }
+        row.appendChild(date);
 
         const name = document.createElement("td");
         name.textContent = booking.bookingName;

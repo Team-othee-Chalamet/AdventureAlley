@@ -19,6 +19,15 @@
     background-color: #f0f0f0;
 }
 
+#employeeOptions {
+    width: 70%;
+}
+
+#employeeInfo {
+    width: 30%;
+}
+
+
 .visible {
     outline: 3px solid red;
 }
@@ -32,4 +41,26 @@
     height: auto;
     border-radius: 5%;
     background-color: #f0f0f0;
+
+    overflow-y: auto;
+}
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    padding: 10px;
+}
+
+
+th {
+    text-align: center;
+    background-color: aquamarine;
+}
+
+td {
+    text-align: right;
+}
+
+tr:nth-child(even) {
+  background-color: #D6EEEE;
 }
