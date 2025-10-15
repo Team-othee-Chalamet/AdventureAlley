@@ -23,10 +23,34 @@
     width: 70%;
 }
 
-#employeeInfo {
+#displayBox {
     width: 30%;
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    height: auto;
+    border-radius: 5%;
+    background-color: #f0f0f0;
+    padding: 20px;
+    gap: 10px;
+}
+
+input {
+    text-align: right;
+}
+
+.formRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
 
 .visible {
     outline: 3px solid red;
@@ -51,7 +75,6 @@ table, th, td {
     padding: 10px;
 }
 
-
 th {
     text-align: center;
     background-color: aquamarine;
@@ -63,4 +86,8 @@ td {
 
 tr:nth-child(even) {
   background-color: #D6EEEE;
+}
+
+tr:hover {
+    background-color: red;
 }

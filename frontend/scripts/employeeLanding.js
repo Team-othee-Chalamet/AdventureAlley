@@ -32,8 +32,6 @@ async function initEmployeeLanding() {
         window.location.href = "login.html";
     }
 
-    
-
     // Event listener for bookings button
     document.getElementById("manageBookings").addEventListener("click", handleManageBookings); 
 }
@@ -52,7 +50,72 @@ async function handleManageBookings(clickevent) {
 }
 
 async function handleTableClick(event) {
+    // Get clicked cell and derive the row
     const clickedElement = event.target;
+    console.log(clickedElement);
+    console.log(clickedElement.closest("tr"));
+    const clickedRow = clickedElement.closest("tr");
+
+    // Empty display box and add a form
+    const displayBox = document.getElementById("displayBox");
+    displayBox.innerHTML = "";
+    const form = document.createElement("form");
+    form.id = "editBookingForm";
+
+    // Add date to form
+    const formDate = document.createElement("label");
+    formDate.textContent = "Dato: " + clickedRow.children[1].textContent;
+    form.appendChild(formDate);
+
+    // Create a div formRow to have input and label on same row
+    const nameRow = document.createElement("div");
+    nameRow.className = "formRow";
+
+    const nameLabel = document.createElement("label");
+    nameLabel.textContent = "Navn:";
+    nameRow.appendChild(nameLabel);
+
+    const inputName = document.createElement("input");
+    inputName.type = "text";
+    inputName.name = "bookingName";
+    inputName.value = clickedRow.children[2].textContent;
+    nameRow.appendChild(inputName);
+
+    form.appendChild(nameRow);
+
+    // formRow for email
+    const emailRow = document.createElement("div");
+    emailRow.className = "formRow";
+
+    const emailLabel = document.createElement("label");
+    emailLabel.textContent = "Email:";
+    emailRow.appendChild(emailLabel);
+
+    const inputEmail = document.createElement("input");
+    //Should be email type, but due to test data it is text
+    inputEmail.type = "text";
+    inputEmail.name = "bookingEmail";
+    inputEmail.value = clickedRow.children[3].textContent;
+    emailRow.appendChild(inputEmail);
+
+    form.appendChild(emailRow);
+
+    // Phone number row
+    const phoneNrRow = document.createElement("div");
+    phoneNrRow.className = "formRow";  
+    const phoneNrLabel = document.createElement("label");
+    phoneNrLabel.textContent = "Telefonnummer:";
+    phoneNrRow.appendChild(phoneNrLabel);
+
+    const inputPhoneNr = document.createElement("input");
+    inputPhoneNr.type = "text";
+    inputPhoneNr.name = "bookingPhoneNr";
+    inputPhoneNr.value = clickedRow.children[4].textContent;
+    phoneNrRow.appendChild(inputPhoneNr);
+    
+    form.appendChild(phoneNrRow);
+
+    displayBox.appendChild(form);
 }
 
 function displayBookings(bookings) {
