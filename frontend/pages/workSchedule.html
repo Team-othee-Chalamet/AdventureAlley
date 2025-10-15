@@ -1,47 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../schedule.css">
     <link rel="shortcut icon" href="#" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
   <body>
-    <h1>Shifts</h1>
+  <main class="container">
+    <section class="grid">
+      <!-- VAGTPLAN -->
+      <div class="card">
+        <div class="cardHead">
+          <h1>Vagtplan</h1>
+          <span id="weekRange" class="muted"></span>
+        </div>
 
-    <!-- CREATE (POST /api/shifts with @RequestParam) -->
-    <h2>Create</h2>
-    <form
-      action="http://localhost:8080/api/shifts"
-      method="post"
-      id="createShiftForm"
-    >
-      <label>Date <input type="date" name="date" required /></label><br />
-      <label>Start <input type="time" name="startTime" required /></label><br />
-      <label>End <input type="time" name="endTime" required /></label><br />
-      <label
-        >Employee ID (optional)
-        <input type="number" name="employeeId" required /></label
-      ><br />
-      <br />
-      <button type="submit">Create shift</button>
-    </form>
+        <table id="shiftTable" class="table">
+          <thead>
+            <tr>
+              <th data-label="Mandag">Mandag</th>
+              <th data-label="Tirsdag">Tirsdag</th>
+              <th data-label="Onsdag">Onsdag</th>
+              <th data-label="Torsdag">Torsdag</th>
+              <th data-label="Fredag">Fredag</th>
+              <th data-label="Lørdag">Lørdag</th>
+              <th data-label="Søndag">Søndag</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
 
-    <table id="shiftTable" style="width: 100%" border="1" cellpadding="8">
-      <thead>
-        <tr>
-          <th data-label="Mandag">Mandag</th>
-          <th data-label="Tirsdag">Tirsdag</th>
-          <th data-label="Onsdag">Onsdag</th>
-          <th data-label="Torsdag">Torsdag</th>
-          <th data-label="Fredag">Fredag</th>
-          <th data-label="Lørdag">Lørdag</th>
-          <th data-label="Søndag">Søndag</th>
-        </tr>
-      </thead>
-      <tbody id="rows"></tbody>
-    </table>
+      <!-- FORM -->
+      <div class="card">
+        <h2>Opret vagt</h2>
+        <form id="createShiftForm" class="form">
+          <label>
+            Dato
+            <input type="date" name="date" required>
+          </label>
+          <br>
+          <label>
+            Start
+            <input type="time" name="startTime" required>
+          </label>
+          <br>
+          <label>
+            Slut
+            <input type="time" name="endTime" required>
+          </label>
+          <br>
+          <label>
+            Medarbejder
+            <select id="employeeSelect" name="employeeId" required>
+              <option value="" disabled selected>Vælg medarbejder…</option>
+            </select>
+          </label>
+          <button type="submit" class="btn">Gem vagt</button>
+        </form>
+      </div>
+    </section>
+  </main>
 
-    <script src="/scripts/scheduleApp.js" defer></script>
-  </body>
+  <script src="../scripts/scheduleApp.js" defer></script>
+</body>
 </html>
