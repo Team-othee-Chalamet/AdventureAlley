@@ -1,0 +1,35 @@
+.employeeMain {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    height: 90%;
+    margin: 2%;
+    border-radius: 5%;
+    background-color: #f0f0f0;
+}
+
+.visible {
+    outline: 3px solid red;
+}
+
+.optionsBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    height: auto;
+    border-radius: 5%;
+    background-color: #f0f0f0;
+}

@@ -6,10 +6,30 @@
     <title>Document</title>
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../headAndFoot.css">
+    <link rel="stylesheet" href="../employeeLanding.css">
     <script src="../scripts/employeeLanding.js" type="module" defer></script>
 </head>
 <body>
-    <h1>Employee landing page</h1>
-    <p id="welcomeMessage"></p>
+    <div class = "employeeMain">
+
+         <div class ="box" id="employeeInfo">
+            <h1>Employee info</h1>
+            <p id="employeeName"></p>
+            <p id="employeeUsername"></p>
+        </div>
+
+        <div class ="box" id="employeeOptions">
+            <h1>Employee options</h1>
+            <div class="optionsBox visible">
+                <button id="manageBookings">Bookings</button>
+                <table id="bookingsTable">
+                    
+                    <tbody>
+                        <!-- Bookings will be populated here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

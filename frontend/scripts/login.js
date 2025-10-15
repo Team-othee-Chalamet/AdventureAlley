@@ -12,6 +12,8 @@ function initApp(){
 
 //Add eventlistener to the form
 function initLogin() {
+    //Remove token if one exists (navigating to login page always logs you out)
+    localStorage.removeItem("token");
     const form = document.getElementById("loginForm")
     form.addEventListener("submit", handleLogin);
 }
@@ -23,8 +25,7 @@ async function handleLogin(event) {
         staffId: event.target.staffId.value,
         password: event.target.password.value
     };
-    //Remove token if one exists (navigating to login page always logs you out)
-    localStorage.removeItem("token");
+    
     try {
         const response = await post("http://localhost:8080/api/auth/login", body);
         console.log("Login successful:", response);
