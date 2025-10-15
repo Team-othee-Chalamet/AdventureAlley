@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <link rel="stylesheet" href="../style.css">
     <link rel="stylesheet" href="../headAndFoot.css">
     <link rel="stylesheet" href="../booking.css">
@@ -19,120 +21,26 @@
     <main>
         <div class="bookingSegment">
             <div class="bookingBox infoBox">
-                <form action="">
+                <form id="bookingForm" class="bookingForm">
                     <input type="text" placeholder="Enter Name">
                     <input type="text" placeholder="Enter E-mail">
                     <input type="text" placeholder="Enter Phone Number">
-                    <div class="valgteBookings">
-                        <div class="booking goKart">
-                            <div class="bookingActivity">
-                                Gokart
-                            </div>
-                            <div class="bookingDate">
-                                2025-10-12
-                            </div>
-                            <div class="bookingStartTime">
-                                09.00
-                            </div>
-                            <div class="removeButton">
-                                r
-                            </div>
-                        </div>
-
-                        <div class="booking goKart">
-                            <div class="bookingActivity">
-                                Gokart
-                            </div>
-                            <div class="bookingDate">
-                                2025-10-12
-                            </div>
-                            <div class="bookingStartTime">
-                                09.00
-                            </div>
-                        </div>
-
-                        <div class="booking goKart">
-                            <div class="bookingActivity">
-                                Gokart
-                            </div>
-                            <div class="bookingDate">
-                                2025-10-12
-                            </div>
-                            <div class="bookingStartTime">
-                                09.00
-                            </div>
-                        </div>
-
-                        <div class="booking goKart">
-                            <div class="bookingActivity">
-                                Gokart
-                            </div>
-                            <div class="bookingDate">
-                                2025-10-12
-                            </div>
-                            <div class="bookingStartTime">
-                                09.00
-                            </div>
-                        </div>
-
-                        <div class="booking goKart">
-                            <div class="bookingActivity">
-                                Gokart
-                            </div>
-                            <div class="bookingDate">
-                                2025-10-12
-                            </div>
-                            <div class="bookingStartTime">
-                                09.00
-                            </div>
-                        </div>
-
-                        <div class="booking goKart">
-                            <div class="bookingActivity">
-                                Gokart
-                            </div>
-                            <div class="bookingDate">
-                                2025-10-12
-                            </div>
-                            <div class="bookingStartTime">
-                                09.00
-                            </div>
-                        </div>
-
-                        <div class="booking goKart">
-                            <div class="bookingActivity">
-                                Gokart
-                            </div>
-                            <div class="bookingDate">
-                                2025-10-12
-                            </div>
-                            <div class="bookingStartTime">
-                                09.00
-                            </div>
-                        </div>
-
-                        <div class="booking goKart">
-                            <div class="bookingActivity">
-                                Gokart
-                            </div>
-                            <div class="bookingDate">
-                                2025-10-12
-                            </div>
-                            <div class="bookingStartTime">
-                                09.00
-                            </div>
-                        </div>
+                    <div class="chosenSessionsField" id="chosenSessionsField">
+                        
                     </div>
                     <button type="submit" class="button">Submit</button>
                 </form>
             </div>
             <div class="calendarBox infoBox">
-                <form>
-                    <input type="date" name="dateInput" id="dateInput">
-                    <button class="button search">
-                        Søg
+                <h1>Vælg session(s)</h1>
+                <form id="dateSearchForm" class="dateSearchForm">
+                    <input class="dateInput" type="date" name="dateInput" id="dateInput">
+                    <button class="search button" id="dateSearchButton" type="submit">
+                        <i class="fa fa-search"></i>
                     </button>
                 </form>
+
+                <div class="message" id="message"></div>
                 
                 <div class="calendar">
         <div class="timeLabels">
@@ -152,10 +60,9 @@
             <div class="timeLabel">15.30</div>
             <div class="timeLabel">16.00</div>
             <div class="timeLabel">16.30</div>
-
         </div>
         
-        <div class="activities">
+        <div class="activities" id="sessionTable">
             <div class="column" id="miniGolfColumn">
                 
             </div>
@@ -171,30 +78,11 @@
         </div>
     </div>
 
-                <!--
-                <table class="activitiesTable">
-                    <thead>
-                        <th>
-                            GoKart
-                        </th>
-                        <th>
-                            PaintBall
-                        </th>
-                        <th>
-                            Sumo
-                        </th>
-                        <th>
-                            MiniGolf
-                        </th>
-                    </thead>
-                    
-                </table>
-                -->
+    <button class="addSession button" id="addSessionButton">Tilføj Session til booking</button>
+
                 
             </div>
         </div>
-
-        <div id="playground" class="infoBox"></div>
         
     </main>
     <footer>
