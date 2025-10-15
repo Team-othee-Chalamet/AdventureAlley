@@ -1,184 +1,258 @@
-.bookingSegment{
-    display: flex;
-    flex-direction: row;
+.bookingSegment {
+	display: flex;
+	flex-direction: row;
 
-    gap: 5%;
-    justify-content: center;
-    padding: 30px;
+	gap: 5%;
+	justify-content: center;
+	padding: 30px;
 }
 
-.calendarBox{
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    gap: 10px;
-
-    width: 40%;
-
-}
-
-.calendar{
-    display: grid;
-    grid-template-columns: 1fr 8fr;
-    box-sizing: border-box;
-    border-radius: 5px;
-    border: 1px solid black;
-    background-color: lightblue;
-
-    overflow: hidden;
-}
-
-.timeLabels{
-    grid-template-rows: span 1;
-    border-right: 1px solid black;
-}
-
-.timeLabel{
-    box-sizing: border-box;
-    border-bottom: 1px solid black;
-    height: 30px;
-    padding: 5px;
-    text-align: right;
-}
-
-.activities{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-}
-
-.column{
-    position: relative;
-    border-right: 1px dashed rgb(116, 116, 116);
-    background-color: white;
-}
-
-.timeSlot{
-    position: absolute;
-    width: 100%;
-    top: calc(30px * var(--start));
-    height: calc(30px * var(--duration));
-    display: grid;
-    grid-template-rows: 1fr;
-}
-
-.session{
-    height: auto;
-    padding: 5px;
-    border-radius: 5px;
-    margin: 2px;
-    border: 1px solid black;
-}
-
-.booked.paintBall,
-.booked.miniGolf,
-.booked.goKart,
-.booked.sumo{
-    border: 2px solid red;
-    background-color: rgb(255, 197, 197);
-}
-
-.paintBall{
-    background-color: rgb(217, 217, 255);
-    border: 2px solid blue;
-}
-
-
-.miniGolf{
-    background-color: rgb(252, 255, 224);
-    border: 2px solid yellow;
-}
-
-.sumo{
-    background-color: rgb(255, 224, 254);
-    border: 2px solid rgb(255, 0, 238);
-}
-
-.goKart{
-    background-color: rgb(224, 255, 235);
-    border: 2px solid rgb(0, 255, 64);
-}
-
-
-
-.bookingBox{
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-    gap: 10px;
-    justify-content: center;
+.calendarBox {
+	background-color: white;
+	display: flex;
+	flex-direction: column;
+	padding: 20px;
+	gap: 10px;
     align-items: center;
 
-    width: 40%;
-
-    form{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-
-        width: 90%;
-
-        input{
-            width: 50%;
-        }
-
-        .valgteBookings{
-            border-radius: 5px;
-            border: 1px solid black;
-            padding: 10px;
-            width: 100%;
-
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            gap: 10px;
-
-            box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.224);
-
-            .booking{
-                display: flex;
-                flex-direction: column;
-                padding: 10px;
-                padding-right: 20px;
-                width: auto;
-                max-width:max-content;
-                border-radius: 4px;
-                position: relative;
-
-                box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.395);
-
-                .removeButton{
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    height: 7px;
-                    width: 7px;
-                    padding: 5px;
-                    position: absolute;
-                    border-radius: 520px;
-                    background-color: red;
-                    font-family: webdings;
-                    top: -8px;
-                    right: -8px;
-                    color: white;
-
-                    border: 1px solid rgb(177, 34, 34);
-
-                    cursor: pointer;
-
-                }
-            }
-
-            .goKart{
-                background-image: linear-gradient(to bottom, rgb(255, 255, 233), rgb(255, 255, 217));
-                background-color: rgb(255, 255, 233);
-                border: 2px solid rgb(245, 230, 114);
-            }
-        }
-    }
-
-
-
+	width: 40%;
 }
+
+.calendar {
+	display: grid;
+	grid-template-columns: 1fr 8fr;
+	box-sizing: border-box;
+	border-radius: 5px;
+
+    width: 100%;
+	overflow: hidden;
+}
+
+.dateSearchForm{
+    display: grid;
+    grid-template-columns: 1fr auto;
+    margin: 10px 0;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid gray;
+    padding: 0;
+    border-radius: 30px;
+}
+
+.dateInput{
+    width: 100%;
+    border: unset;
+    padding-left: 7px;
+    height: 100%;
+    background-color: unset;
+    border-radius: 20px 0px 0px 20px;
+}
+
+.search.button{
+    height: 10px;
+    border-radius: 0px 20px 20px 0px;
+    border-left: 1px solid black;
+    padding: 10px;
+    padding-left: 7px;
+    display: flex;
+    margin: 0;
+}
+
+.addSession.button{
+    border: 1px solid lightgray;
+}
+
+.timeLabels {
+	grid-template-rows: span 1;
+	border-right: 1px solid black;
+	box-sizing: border-box;
+}
+
+.timeLabel {
+	box-sizing: border-box;
+	background-color: rgb(113, 162, 126);
+	background-image: linear-gradient(
+		to right,
+		rgb(113, 162, 126),
+		rgb(96, 145, 109)
+	);
+	color: white;
+	border-radius: 10px 0px 0px 10px;
+	border: 1px solid white;
+
+	height: 30px;
+	padding: 5px;
+	text-align: right;
+}
+
+.activities {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.column {
+	position: relative;
+	border-right: 1px dashed rgb(116, 116, 116);
+	background-color: white;
+}
+
+.timeSlot {
+	position: absolute;
+	width: 100%;
+	top: calc(30px * var(--start));
+	height: calc(30px * var(--duration));
+	display: grid;
+	grid-template-rows: 1fr;
+}
+
+.session {
+	height: auto;
+	padding: 5px;
+	border-radius: 3px;
+	margin: 3px;
+	cursor: pointer;
+	border-left: 2px;
+	border-left-style: solid;
+	box-sizing: border-box;
+    transition: .25s;
+}
+
+.session:hover {
+	border-left-width: 5px;
+    transition: .25s;
+}
+
+.booked.Paintball,
+.booked.Minigolf,
+.booked.Gokart,
+.booked.Sumo {
+	background-color: rgb(255, 197, 197);
+	border-left-color: rgb(255, 123, 123);
+	border-left-width: 5px;
+	cursor: default;
+}
+
+.Paintball {
+	--paintBallColor: rgb(255, 242, 225);
+	background-color: var(--paintBallColor);
+	border-left-color: hsl(from var(--paintBallColor) h 120% 70%);
+}
+
+.Minigolf {
+	--miniGolfColor: rgb(225, 250, 255);
+	background-color: var(--miniGolfColor);
+	border-left-color: hsl(from var(--miniGolfColor) h 120% 70%);
+}
+
+.Sumo {
+	--sumoColor: rgb(225, 240, 255);
+	background-color: var(--sumoColor);
+	border-left-color: hsl(from var(--sumoColor) h 120% 70%);
+}
+
+.Gokart {
+	--goKartColor: rgb(245, 242, 185);
+	background-color: var(--goKartColor);
+	border-left-color: hsl(from var(--goKartColor) h 120% 30%);
+}
+
+.chosen.Paintball,
+.chosen.Minigolf,
+.chosen.Gokart,
+.chosen.Sumo {
+	--chosenColor: rgb(209, 255, 203);
+	background-color: var(--chosenColor);
+	border-left-color: hsl(from var(--chosenColor) h 120% 30%);
+	border-left-width: 5px;
+	cursor: default;
+}
+
+.reserved.Paintball,
+.reserved.Minigolf,
+.reserved.Gokart,
+.reserved.Sumo {
+	background-color: rgb(125, 213, 146);
+	border-left-color: rgb(72, 137, 81);
+	border-left-width: 5px;
+	cursor: default;
+}
+
+.bookingBox {
+	background-color: white;
+	display: flex;
+	flex-direction: column;
+	padding: 20px;
+	gap: 10px;
+	justify-content: center;
+	align-items: center;
+
+	width: 40%;
+}
+
+.bookingForm {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+
+	width: 90%;
+}
+
+input {
+	width: 50%;
+}
+
+.chosenSessionsField {
+	border-radius: 5px;
+    min-height: 60px;
+	border: 1px solid black;
+	padding: 10px;
+	min-width: 50%;
+    width: auto;
+    max-width: 83%;
+
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 20px;
+
+	box-shadow: inset 3px 3px 5px rgba(0, 0, 0, 0.224);
+}
+
+.booking {
+	height: auto;
+	padding: 5px;
+	border-radius: 3px;
+	border-left: 3px;
+	border-left-style: solid;
+	box-sizing: border-box;
+
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	padding-right: 20px;
+	width: auto;
+	max-width: max-content;
+	position: relative;
+}
+
+.removeButton {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 7px;
+	width: 7px;
+	padding: 5px;
+	position: absolute;
+	border-radius: 520px;
+	background-color: red;
+	font-family: webdings;
+	top: -8px;
+	right: -8px;
+	color: white;
+
+	border: 1px solid rgb(177, 34, 34);
+
+	cursor: pointer;
+}
+
