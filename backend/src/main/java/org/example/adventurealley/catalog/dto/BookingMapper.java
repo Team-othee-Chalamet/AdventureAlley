@@ -22,11 +22,12 @@ public class BookingMapper {
         }
         */
         // addonDTOs skal tilføjes igen
-        return new BookingDTO(booking.getPersonName(), booking.getPersonEmail(), booking.getPersonPhoneNr(), sessionDTOs);
+        return new BookingDTO(booking.getId(), booking.getPersonName(), booking.getPersonEmail(), booking.getPersonPhoneNr(), sessionDTOs);
     }
 
     static public Booking toEntity(BookingDTO bookingDTO){
         Booking booking = new Booking();
+        booking.setId(bookingDTO.id());
         booking.setPersonName(bookingDTO.bookingName());
         booking.setPersonEmail(bookingDTO.bookingEmail());
         booking.setPersonPhoneNr(bookingDTO.bookingPhoneNr());
