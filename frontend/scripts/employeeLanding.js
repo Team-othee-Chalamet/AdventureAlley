@@ -51,11 +51,20 @@ async function handleManageBookings(clickevent) {
 }
 }
 
+async function handleTableClick(event) {
+    const clickedElement = event.target;
+}
+
 function displayBookings(bookings) {
     const table = document.getElementById("bookingsTable");
-  
+    table.addEventListener("click", handleTableClick);
+
     const header = document.createElement("thead");
     
+    const thId = document.createElement("th");
+    thId.textContent = "ID";
+    header.appendChild(thId);
+
     const thDate = document.createElement("th");
     thDate.textContent = "Dato";
     header.appendChild(thDate);
@@ -93,13 +102,17 @@ function displayBooking(booking) {
 
         const row = document.createElement("tr");
 
+        const id = document.createElement("td");
+        id.textContent = booking.id;       
+        row.appendChild(id);
+
         // InitData has bookings without sessions
         const date = document.createElement("td");
         if (!booking.sessionDtos[0]){
             date.textContent = "Ingen sessioner";
         } else {
         date.textContent = booking.sessionDtos[0].date;
-    }
+        }
         row.appendChild(date);
 
         const name = document.createElement("td");
