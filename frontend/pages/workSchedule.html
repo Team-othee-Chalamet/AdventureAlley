@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../schedule.css">
+    <link rel="shortcut icon" href="#" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+  <main class="container">
+    <section class="grid">
+      <!-- VAGTPLAN -->
+      <div class="card">
+        <div class="cardHead">
+          <h1>Vagtplan</h1>
+          <span id="weekRange" class="muted"></span>
+        </div>
+
+        <table id="shiftTable" class="table">
+          <thead>
+            <tr>
+              <th data-label="Mandag">Mandag</th>
+              <th data-label="Tirsdag">Tirsdag</th>
+              <th data-label="Onsdag">Onsdag</th>
+              <th data-label="Torsdag">Torsdag</th>
+              <th data-label="Fredag">Fredag</th>
+              <th data-label="Lørdag">Lørdag</th>
+              <th data-label="Søndag">Søndag</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+
+      <!-- FORM -->
+      <div class="card">
+        <h2>Opret vagt</h2>
+        <form id="createShiftForm" class="form">
+          <label>
+            Dato
+            <input type="date" name="date" required>
+          </label>
+          <br>
+          <label>
+            Start
+            <input type="time" name="startTime" required>
+          </label>
+          <br>
+          <label>
+            Slut
+            <input type="time" name="endTime" required>
+          </label>
+          <br>
+          <label>
+            Medarbejder
+            <select id="employeeSelect" name="employeeId" required>
+              <option value="" disabled selected>Vælg medarbejder…</option>
+            </select>
+          </label>
+          <button type="submit" class="btn">Gem vagt</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script src="../scripts/scheduleApp.js" defer></script>
+</body>
+</html>
