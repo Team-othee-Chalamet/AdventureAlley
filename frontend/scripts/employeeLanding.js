@@ -19,33 +19,54 @@ async function getCurrentUser() {
 }
 
 async function initEmployeeLanding() {
-    // If there is no user, redirect to login page
-    try {
-    const user = await getCurrentUser();
-    console.log(user);
-
-    document.getElementById("employeeName").textContent = "Navn: " + user.name + " " + user.surname;
-    document.getElementById("employeeUsername").textContent = "Brugernavn: " + user.staffId;
-    } catch (error) {
-        console.error("Error fetching user data:", error);
-        alert("Fejl ved hentning af brugerdata. Prøv at logge ind igen.");
-        window.location.href = "login.html";
-    }
+    await displayEmployee();
 
     // Event listener for bookings button
     document.getElementById("manageBookings").addEventListener("click", handleManageBookings); 
 }
 
+async function displayEmployee() {
+    // If there is no user, redirect to login page
+    try {
+    const user = await getCurrentUser();
+    console.log(user);
+
+    const emplHeader = document.createElement("h1");
+    emplHeader.textContent = "Velkommen!";
+    const emplName = document.createElement("p");
+    emplName.textContent = "Fornavn: " + user.name;
+    const emplSurname = document.createElement("p");
+    emplSurname.textContent = "Efternavn: " + user.surname;
+    const emplUsername = document.createElement("p");
+    emplUsername.textContent = "Brugernavn: " + user.staffId;
+
+    const displayBox = document.getElementById("displayBox");
+    displayBox.innerHTML = "";
+
+    displayBox.appendChild(emplHeader);
+    displayBox.appendChild(emplName);
+    displayBox.appendChild(emplSurname);
+    displayBox.appendChild(emplUsername);
+    
+
+    } catch (error) {
+        console.error("Error fetching user data:", error);
+        alert("Fejl ved hentning af brugerdata. Prøv at logge ind igen.");
+        window.location.href = "login.html";
+    }
+}
+
 async function handleManageBookings(clickevent) {
     const table = document.getElementById("bookingsTable");
-    
+    const displayBox = document.getElementById("displayBox");
+
     // If table is empty, fill it, else empty it
     if (table.innerHTML === "") {
     const bookings = await get("http://localhost:8080/api/bookings");
-    console.log(bookings);
     displayBookings(bookings);
 } else {
     table.innerHTML = "";
+    displayEmployee();
 }
 }
 
@@ -114,6 +135,13 @@ async function handleTableClick(event) {
     phoneNrRow.appendChild(inputPhoneNr);
     
     form.appendChild(phoneNrRow);
+
+    const submitButton = document.createElement("button");
+    submitButton.id = "submitEditBooking";
+    submitButton.type = "submit";
+    submitButton.textContent = "Opdater booking";
+    submitButton.addEventListener("click", handleSubmition);
+    form.appendChild(submitButton);
 
     displayBox.appendChild(form);
 }
@@ -204,5 +232,10 @@ function displayBooking(booking) {
 
         table.appendChild(row);
     };
+}
+
+function handleSubmition(event) {
+    event.preventDefault();
+    console.log("Submit clicked");
 }
     

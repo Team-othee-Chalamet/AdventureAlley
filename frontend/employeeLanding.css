@@ -38,10 +38,12 @@ form {
     background-color: #f0f0f0;
     padding: 20px;
     gap: 10px;
+
+    
 }
 
 input {
-    text-align: right;
+    text-align: left;
 }
 
 .formRow {
@@ -50,6 +52,14 @@ input {
     align-items: center;
     justify-content: space-between;
     width: 100%;
+
+    input{
+        width: 50%;
+    }
+
+    label {
+        width: 40%;
+    }
 }
 
 .visible {
