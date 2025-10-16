@@ -7,8 +7,8 @@ import { post } from "../fetchUtil.js"
 import { get } from "../fetchUtil.js"
 
 function initApp(){
-    
     initEmployeeLanding();
+
 
 }
 
@@ -71,10 +71,9 @@ async function handleManageBookings(clickevent) {
 }
 
 async function handleTableClick(event) {
+    
     // Get clicked cell and derive the row
     const clickedElement = event.target;
-    console.log(clickedElement);
-    console.log(clickedElement.closest("tr"));
     const clickedRow = clickedElement.closest("tr");
 
     // Empty display box and add a form
@@ -83,42 +82,53 @@ async function handleTableClick(event) {
     const form = document.createElement("form");
     form.id = "editBookingForm";
 
-    // Add date to form
-    const formDate = document.createElement("label");
-    formDate.textContent = "Dato: " + clickedRow.children[1].textContent;
-    form.appendChild(formDate);
+    // Add id to form
+    const idRow = document.createElement("div");
+    idRow.className = "formRow";
+    const formIdLabel = document.createElement("label");
+    formIdLabel.textContent = "Booking ID:";
+    idRow.appendChild(formIdLabel);
+    const formId = document.createElement("p");
+    formId.textContent = clickedRow.children[0].textContent;
+    idRow.appendChild(formId);
+    form.appendChild(idRow);
 
-    // Create a div formRow to have input and label on same row
+    // Add date to form
+    const dateRow = document.createElement("div");
+    dateRow.className = "formRow";
+    const formDateLabel = document.createElement("label");
+    formDateLabel.textContent = "Dato:";
+    dateRow.appendChild(formDateLabel);
+    const formDate = document.createElement("p");
+    formDate.textContent = clickedRow.children[1].textContent;
+    dateRow.appendChild(formDate);
+    form.appendChild(dateRow);
+
+    // Add name to form
     const nameRow = document.createElement("div");
     nameRow.className = "formRow";
-
     const nameLabel = document.createElement("label");
     nameLabel.textContent = "Navn:";
     nameRow.appendChild(nameLabel);
-
     const inputName = document.createElement("input");
     inputName.type = "text";
     inputName.name = "bookingName";
     inputName.value = clickedRow.children[2].textContent;
     nameRow.appendChild(inputName);
-
     form.appendChild(nameRow);
 
     // formRow for email
     const emailRow = document.createElement("div");
     emailRow.className = "formRow";
-
     const emailLabel = document.createElement("label");
     emailLabel.textContent = "Email:";
     emailRow.appendChild(emailLabel);
-
     const inputEmail = document.createElement("input");
     //Should be email type, but due to test data it is text
     inputEmail.type = "text";
     inputEmail.name = "bookingEmail";
     inputEmail.value = clickedRow.children[3].textContent;
     emailRow.appendChild(inputEmail);
-
     form.appendChild(emailRow);
 
     // Phone number row
@@ -127,20 +137,49 @@ async function handleTableClick(event) {
     const phoneNrLabel = document.createElement("label");
     phoneNrLabel.textContent = "Telefonnummer:";
     phoneNrRow.appendChild(phoneNrLabel);
-
     const inputPhoneNr = document.createElement("input");
     inputPhoneNr.type = "text";
     inputPhoneNr.name = "bookingPhoneNr";
     inputPhoneNr.value = clickedRow.children[4].textContent;
     phoneNrRow.appendChild(inputPhoneNr);
-    
     form.appendChild(phoneNrRow);
 
+    // Add sessions to form - realized late that they are not declared in scope so will import again though not effective
+    const booking = await get("http://localhost:8080/api/bookings/"+clickedRow.children[0].textContent); 
+    console.log(booking);
+    const sessionsRow = document.createElement("div");
+    sessionsRow.className = "formRow";
+    const sessionsLabel = document.createElement("label");
+    sessionsLabel.textContent = "Sessioner:";
+    form.appendChild(sessionsLabel);
+    
+    // Container for sessions that can scroll
+    const sessionContainer = document.createElement("div");
+    sessionContainer.id = "sessionContainer";
+    form.appendChild(sessionContainer);
+
+    const sessions = booking.sessionDtos;
+    sessions.sort((a, b) => a.startTime.localeCompare(b.startTime));
+    sessions.forEach(session => {
+        const sessionRow = document.createElement("div");
+        sessionRow.className = "formRow";
+        const sessionActivity = document.createElement("p");
+        const sessionTime = document.createElement("p");
+        sessionActivity.textContent = session.activityType;
+        sessionTime.textContent = session.startTime + " - " + session.endTime;
+        sessionRow.appendChild(sessionActivity);
+        sessionRow.appendChild(sessionTime);
+        sessionContainer.appendChild(sessionRow);
+    });
+    
+    form.appendChild(sessionsRow);
+    
+    // Add submit button
     const submitButton = document.createElement("button");
     submitButton.id = "submitEditBooking";
     submitButton.type = "submit";
     submitButton.textContent = "Opdater booking";
-    submitButton.addEventListener("click", handleSubmition);
+    submitButton.addEventListener("click", handleSubmission);
     form.appendChild(submitButton);
 
     displayBox.appendChild(form);
@@ -188,11 +227,8 @@ function displayBookings(bookings) {
 }
 
 function displayBooking(booking) {
-    {
         const table = document.getElementById("bookingsTable");
-
         const row = document.createElement("tr");
-
         const id = document.createElement("td");
         id.textContent = booking.id;       
         row.appendChild(id);
@@ -231,10 +267,9 @@ function displayBooking(booking) {
         row.appendChild(addons);
 
         table.appendChild(row);
-    };
 }
 
-function handleSubmition(event) {
+function handleSubmission(event) {
     event.preventDefault();
     console.log("Submit clicked");
 }
