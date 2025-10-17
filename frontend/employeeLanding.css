@@ -29,7 +29,7 @@
 
 #sessionContainer {
     max-height: 15%;
-    width: 100%;
+    width: 80%;
     overflow-y: auto;
     padding: 5%;
     line-height: 0%;
@@ -68,6 +68,10 @@ input {
     label {
         width: 40%;
     }
+}
+
+.sessionRow:hover {
+    background-color: lightgray;
 }
 
 .visible {

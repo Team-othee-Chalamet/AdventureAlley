@@ -84,6 +84,7 @@ async function handleTableClick(event) {
     form.id = "editBookingForm";
 
     // Add id to form
+    {
     const idRow = document.createElement("div");
     idRow.className = "formRow";
     const formIdLabel = document.createElement("label");
@@ -99,8 +100,10 @@ async function handleTableClick(event) {
     idForData.name = "id";
     idForData.value = clickedRow.children[0].textContent;
     form.appendChild(idForData);
+    }
 
     // Add date to form
+    {
     const dateRow = document.createElement("div");
     dateRow.className = "formRow";
     const formDateLabel = document.createElement("label");
@@ -110,8 +113,10 @@ async function handleTableClick(event) {
     formDate.textContent = clickedRow.children[1].textContent;
     dateRow.appendChild(formDate);
     form.appendChild(dateRow);
+    }
 
     // Add name to form
+    {
     const nameRow = document.createElement("div");
     nameRow.className = "formRow";
     const nameLabel = document.createElement("label");
@@ -123,22 +128,25 @@ async function handleTableClick(event) {
     inputName.value = clickedRow.children[2].textContent;
     nameRow.appendChild(inputName);
     form.appendChild(nameRow);
+    }
 
-    // formRow for email
+    // Add email to form
+    {
     const emailRow = document.createElement("div");
     emailRow.className = "formRow";
     const emailLabel = document.createElement("label");
     emailLabel.textContent = "Email:";
     emailRow.appendChild(emailLabel);
     const inputEmail = document.createElement("input");
-    //Should be email type, but due to test data it is text
     inputEmail.type = "text";
     inputEmail.name = "bookingEmail";
     inputEmail.value = clickedRow.children[3].textContent;
     emailRow.appendChild(inputEmail);
     form.appendChild(emailRow);
+}
 
-    // Phone number row
+    // Add phone number to form
+    {
     const phoneNrRow = document.createElement("div");
     phoneNrRow.className = "formRow";  
     const phoneNrLabel = document.createElement("label");
@@ -151,52 +159,96 @@ async function handleTableClick(event) {
     phoneNrRow.appendChild(inputPhoneNr);
     form.appendChild(phoneNrRow);
 
+    displayBox.appendChild(form);
+    }
     // Add sessions to form - realized late that they are not declared in scope so will import again though not effective
-    const booking = await get("http://localhost:8080/api/bookings/"+clickedRow.children[0].textContent); 
+    let booking = await get("http://localhost:8080/api/bookings/"+clickedRow.children[0].textContent); 
     console.log(booking);
     const sessionsRow = document.createElement("div");
     sessionsRow.className = "formRow";
     const sessionsLabel = document.createElement("label");
     sessionsLabel.textContent = "Sessioner:";
-    form.appendChild(sessionsLabel);
+    displayBox.appendChild(sessionsLabel);
     
     // Container for sessions that can scroll
     const sessionContainer = document.createElement("div");
     sessionContainer.id = "sessionContainer";
-    form.appendChild(sessionContainer);
+    
+    displayBox.appendChild(sessionContainer);
 
+    // Add sessions to container
+    {
     const sessions = booking.sessionDtos;
     sessions.sort((a, b) => a.startTime.localeCompare(b.startTime));
+    
+    let sessionIndex = 0;
     sessions.forEach(session => {
         const sessionRow = document.createElement("div");
-        sessionRow.className = "formRow";
+        sessionRow.className = "formRow sessionRow";
         const sessionActivity = document.createElement("p");
         const sessionTime = document.createElement("p");
 
         const idForSession = document.createElement("input");
         idForSession.type = "hidden";
         idForSession.name = "id";
-        idForSession.value = session.id;
+        idForSession.value = sessionIndex;
         sessionRow.appendChild(idForSession);
 
         sessionActivity.textContent = session.activityType;
         sessionTime.textContent = session.startTime + " - " + session.endTime;
         sessionRow.appendChild(sessionActivity);
         sessionRow.appendChild(sessionTime);
+
+        const deleteButton = document.createElement("button");
+        deleteButton.type = "button";
+        deleteButton.textContent = "Slet session";
+        sessionRow.appendChild(deleteButton);
+
         sessionContainer.appendChild(sessionRow);
-        console.log(session);
+        sessionIndex++;
     });
-    form.appendChild(sessionsRow);
-    
+    sessionContainer.appendChild(sessionsRow);
+    }
+
+    // Click event for sessions button
+    let sessionsToDelete = [];
+
+    sessionContainer.addEventListener("click", (event) => {
+        const clickedElement = event.target;
+        console.log("Clicked element:", clickedElement);
+
+        const sessionRow = clickedElement.closest(".sessionRow");
+        if (!sessionRow) return;
+        console.log("Session clicked:", sessionRow);
+
+        const sessionRowIndex = sessionRow.querySelector('input[name="id"]').value;
+        console.log("Session index:", sessionRowIndex);
+
+        if (clickedElement.type === "button") {
+            if (clickedElement.textContent === "Slet session") {
+            sessionRow.style.textDecoration = "line-through";
+            clickedElement.textContent = "Fortryd sletning";
+            sessionsToDelete.push(sessionRowIndex);
+            console.log("Sessions to delete:", sessionsToDelete);
+
+        } else if (clickedElement.textContent === "Fortryd sletning") {
+            sessionRow.style.textDecoration = "none";
+            clickedElement.textContent = "Slet session";
+            sessionsToDelete.splice(sessionsToDelete.indexOf(sessionRowIndex), 1);
+            console.log("Sessions to delete:", sessionsToDelete);
+        }}
+    });
+
     // Add submit button
     const submitButton = document.createElement("button");
     submitButton.id = "submitEditBooking";
     submitButton.type = "submit";
     submitButton.textContent = "Opdater booking";
     submitButton.addEventListener("click", handleSubmission);
-    form.appendChild(submitButton);
+    displayBox.appendChild(submitButton);
 
-    displayBox.appendChild(form);
+    // ToDo: Handle form submission and send updated data to backend
+
 }
 
 function displayBookings(bookings) {
