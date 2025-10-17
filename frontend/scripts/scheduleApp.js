@@ -4,38 +4,37 @@
 const BASE = "http://localhost:8080/api/shifts";
 const EMP_BASE = "http://localhost:8080/api/employees";
 
-// --- Helpers: uge-beregning + range ---
-function startOfNextWeek(base = new Date()) {
-  const d = new Date(base);
-  const day = (d.getDay() + 6) % 7;          // mandag=0
-  const nextMon = new Date(d);
-  nextMon.setDate(d.getDate() - day + 7);    // hop til næste mandag
-  nextMon.setHours(0, 0, 0, 0);
+function startOfNextWeek(iDag = new Date) { //metoden returnerer et Date objekt til næste mandag fra i Dag
+  const d = new Date(iDag);
+  const day = (d.getDay() + 6) % 7; // i JS er 0 søndag vi vil have 0 bliver mandag, derfor skrives denne logik som skubber en hver ugedag et tal frem
+  const nextMon = new Date(d); //
+  nextMon.setDate(d.getDate() - day + 7); //Vi skal sætte datoen til næste mandag. getDate returnere dag på måneden som vi minusser med vores modificerede dag så vi rammer en mandag så plusser vi med 7 for at ramme næste mandag
+  nextMon.setHours(0, 0, 0, 0); //Her sætter vi bare timerne på Date objektet
   return nextMon;
 }
 
-function endOfWeek(startMon) {
+function endOfWeek(startMon) { // returnere et Date objekt til næste mandag efter næste mandag
   const end = new Date(startMon);
-  end.setDate(startMon.getDate() + 7);       // eksklusiv næste mandag
+  end.setDate(startMon.getDate() + 7);      
   end.setHours(0, 0, 0, 0);
   return end;
 }
 
 function inRange(dateStr, start, end) {
-  const d = new Date(dateStr + "T00:00");
+  const d = new Date(dateStr + "T00:00"); //T00:00 parse det til dansk til i stedet for amerikansk
   return d >= start && d < end;
 }
 
 // Mandag = 0 ... Søndag = 6
-function dowIndex(isoDate) {
+function dowIndex(isoDate) { //
   const d = new Date(isoDate + "T00:00");
   return (d.getDay() + 6) % 7;
 }
 
 // --- DOM render: header med datoer ---
-function renderWeekHeader(startMon) {
-  const ths = document.querySelectorAll("#shiftTable thead th");
-  for (let i = 0; i < 7; i++) {
+function renderWeekHeader(startMon) { // render headeren med datoer
+  const ths = document.querySelectorAll("#shiftTable thead th"); // ths = Table headers
+  for (let i = 0; i < 7; i++) { // looper 7 gange
     const d = new Date(startMon);
     d.setDate(startMon.getDate() + i);
     const label = ths[i].dataset.label || ths[i].textContent;
