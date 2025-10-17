@@ -23,7 +23,7 @@ public class SessionInitData implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Booking booking = new Booking("Mikkel", "MikkelMail", "30504870");
+        Booking booking = new Booking("Mikkel", "MikkelMail", "30504870", 100, 5);
         bookingRepo.save(booking);
 
         Session session1 = new Session(LocalDate.now(), LocalTime.of(9,0,0), LocalTime.of(11,0,0), booking, ActivityType.Gokart);

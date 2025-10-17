@@ -8,10 +8,14 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActivityGoKart extends Activity {
+public class ActivityGoKart implements Activity {
+
+    static boolean perPerson = true;
+    static double price = 350.00;
+
     static int durationInHours = 2;
 
-    public static List<Session> getAvailableSessions(LocalDate startDate, LocalDate endDate){
+    public List<Session> getAvailableSessions(LocalDate startDate, LocalDate endDate){
         List<Session> generatedSessions = new ArrayList<>();
 
         LocalDate currentIterationDay = startDate; //Set a currentDay to differentiate between startDate and the current date having sessions added
@@ -26,5 +30,13 @@ public class ActivityGoKart extends Activity {
 
 
         return generatedSessions;
+    }
+
+    public double getPrice(){
+        return price;
+    }
+
+    public boolean isPerPerson(){
+        return perPerson;
     }
 }

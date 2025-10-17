@@ -9,6 +9,7 @@ import org.example.adventurealley.catalog.model.activities.ActivityFactory;
 import org.example.adventurealley.catalog.model.activities.ActivityType;
 import org.example.adventurealley.common.baseClasses.BaseEntity;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -19,6 +20,7 @@ public class Session extends BaseEntity implements Comparable<Session>{
     LocalDate date;
     LocalTime startTime;
     LocalTime endTime;
+    double price;
 
     @Enumerated(EnumType.STRING)
     ActivityType activityType;
@@ -38,6 +40,24 @@ public class Session extends BaseEntity implements Comparable<Session>{
         if(this.booking == null){
             this.bookingStatus = false;
         }
+        this.price = this.calcPrice();
+    }
+
+    private double calcPrice(){
+        double basePrice = ActivityFactory.getActivity(activityType).getPrice();
+        double currentPrice = basePrice;
+
+        if (this.date.getDayOfWeek() != DayOfWeek.SATURDAY && this.date.getDayOfWeek() != DayOfWeek.SUNDAY){
+            currentPrice = currentPrice-(basePrice*0.20);
+        }
+
+        if (this.startTime.isBefore(LocalTime.of(12,0,0))) {
+            currentPrice = currentPrice-(basePrice*0.20);
+        }
+
+        currentPrice = Math.round(currentPrice * 100) / 100;
+
+        return currentPrice;
     }
 
     public LocalDate getDate() {
@@ -74,6 +94,10 @@ public class Session extends BaseEntity implements Comparable<Session>{
 
     public boolean getBookingStatus(){
         return bookingStatus;
+    }
+
+    public double getPrice() {
+        return price;
     }
 
     @Override
