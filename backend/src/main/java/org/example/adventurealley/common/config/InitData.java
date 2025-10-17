@@ -18,7 +18,7 @@ public class InitData implements CommandLineRunner {
         System.out.println("Starting commandLine Runner to initialize Data");
 
         for (int i = 0; i < 4; i++) {
-            Booking booking = new Booking(""+i, ""+i, ""+i);
+            Booking booking = new Booking(""+i, ""+i, ""+i, 0.0, i);
             bookingRepo.save(booking);
         }
     }

@@ -21,14 +21,12 @@ import java.util.List;
 public class ShiftInitData implements CommandLineRunner {
 
     private final EmployeeRepo employeeRepo;
-    private final ActivityRepo activityRepo;
     private final ShiftRepo shiftRepo;
     EmployeeService employeeService;
 
 
-    public ShiftInitData(EmployeeRepo employeeRepo, ActivityRepo activityRepo, ShiftRepo shiftRepo) {
+    public ShiftInitData(EmployeeRepo employeeRepo, ShiftRepo shiftRepo) {
         this.employeeRepo = employeeRepo;
-        this.activityRepo = activityRepo;
         this.shiftRepo = shiftRepo;
     }
 
@@ -44,7 +42,7 @@ public class ShiftInitData implements CommandLineRunner {
         var e1 = list.get(0);
         var e2 = list.get(1);
 
-        LocalDate base = LocalDate.now();
+        LocalDate base = LocalDate.of(2025,10,21);
 
 
 

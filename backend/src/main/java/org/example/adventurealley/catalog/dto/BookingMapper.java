@@ -22,7 +22,7 @@ public class BookingMapper {
         }
         */
         // addonDTOs skal tilføjes igen
-        return new BookingDTO(booking.getId(), booking.getPersonName(), booking.getPersonEmail(), booking.getPersonPhoneNr(), sessionDTOs);
+        return new BookingDTO(booking.getId(), booking.getPersonName(), booking.getPersonEmail(), booking.getPersonPhoneNr(), booking.getBookingPrice(), booking.getGuestAmount(), sessionDTOs);
     }
 
     static public Booking toEntity(BookingDTO bookingDTO){
@@ -31,6 +31,8 @@ public class BookingMapper {
         booking.setPersonName(bookingDTO.bookingName());
         booking.setPersonEmail(bookingDTO.bookingEmail());
         booking.setPersonPhoneNr(bookingDTO.bookingPhoneNr());
+        booking.setBookingPrice(bookingDTO.bookingPrice());
+        booking.setGuestAmount(bookingDTO.guestAmount());
 
         for(SessionDTO sessionDTO: bookingDTO.sessionDtos()){
             booking.addSession(SessionMapper.toEntity(sessionDTO, booking));

@@ -1,94 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+		/>
 
-    <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="../headAndFoot.css">
-    <link rel="stylesheet" href="../booking.css">
+		<link rel="stylesheet" href="../style.css" />
+		<link rel="stylesheet" href="../headAndFoot.css" />
+		<link rel="stylesheet" href="../booking.css" />
+	</head>
+	<body>
+		<header>
+			<div class="headerLogo">ADVENTURE ALLEY</div>
+			<div class="headButton">HOME</div>
+			<div class="headButton">ACTIVITIES</div>
+		</header>
+		<main>
+			<div class="bookingSegment">
+				<div class="bookingBox infoBox">
+                    <h1>Indtast venligst dine oplysninger</h1>
+					<form id="bookingForm" class="bookingForm">
+						<input class="inputField" name="nameInput" id="nameInput" type="text" placeholder="Enter Name" required="true" />
+						<input class="inputField" name="emailInput" id="emailInput" type="text" placeholder="Enter E-mail" required="true" />
+						<input class="inputField" name="phoneInput" id="phoneInput" type="text" placeholder="Enter Phone Number" required="true" />
 
-</head>
-<body>
-        <header>
-        <div class="headerLogo">ADVENTURE ALLEY</div>
-        <div class="headButton">HOME</div>
-        <div class="headButton">ACTIVITIES</div>
-    </header>
-    <main>
-        <div class="bookingSegment">
-            <div class="bookingBox infoBox">
-                <form id="bookingForm" class="bookingForm">
-                    <input type="text" placeholder="Enter Name">
-                    <input type="text" placeholder="Enter E-mail">
-                    <input type="text" placeholder="Enter Phone Number">
-                    <div class="chosenSessionsField" id="chosenSessionsField">
+						<!--Input til mængden af gæster-->
+						<div class="guestSelectSection row">
+							<p>vælg antal gæster</p>
+							<div class="guestSelect" id="guestSelect">
+								<button class="button" data-isMinus="true" id="guestMinusButton">-</button>
+								<div class="guestAmount" id="guestAmount">1</div>
+								<button class="button" data-isPlus="true" id="guestPlusButton">+</button>
+							</div>
+						</div>
+
+						<div class="chosenSessionsField" id="chosenSessionsField"></div>
+
+                        <!--
+                        <div class="firmaToggle row">
+                            <input type="checkbox" name="companyToggle" id="companyToggle"> Jeg booker på vegne af et firma
+                        </div>
+                        -->
                         
-                    </div>
-                    <button type="submit" class="button">Submit</button>
-                </form>
-            </div>
-            <div class="calendarBox infoBox">
-                <h1>Vælg session(s)</h1>
-                <form id="dateSearchForm" class="dateSearchForm">
-                    <input class="dateInput" type="date" name="dateInput" id="dateInput">
-                    <button class="search button" id="dateSearchButton" type="submit">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </form>
+                        <div class="moneySectionParent">
+                            <div class="moneySection">
+                                <div class="spaceBetweenRow">
+                                    <div class="itemTitle">total</div>
+                                    <div class="amount" id="moneyAmount">0,-</div>
+                                </div>
+                            </div>
+                        </div>
 
-                <div class="message" id="message"></div>
-                
-                <div class="calendar">
-        <div class="timeLabels">
-            <div class="timeLabel">9.00</div>
-            <div class="timeLabel">9.30</div>
-            <div class="timeLabel">10.00</div>
-            <div class="timeLabel">10.30</div>
-            <div class="timeLabel">11.00</div>
-            <div class="timeLabel">11.30</div>
-            <div class="timeLabel">12.00</div>
-            <div class="timeLabel">12.30</div>
-            <div class="timeLabel">13.00</div>
-            <div class="timeLabel">13.30</div>
-            <div class="timeLabel">14.00</div>
-            <div class="timeLabel">14.30</div>
-            <div class="timeLabel">15.00</div>
-            <div class="timeLabel">15.30</div>
-            <div class="timeLabel">16.00</div>
-            <div class="timeLabel">16.30</div>
-        </div>
-        
-        <div class="activities" id="sessionTable">
-            <div class="column" id="miniGolfColumn">
-                
-            </div>
-            <div class="column" id="paintBallColumn">
-                
-            </div>
-            <div class="column" id="sumoColumn">
+                        <div id="submitMessage"></div>
+                        
+						<button type="submit" id="submitButton" class="button">Submit</button>
+					</form>
+				</div>
+				<div class="calendarBox infoBox">
+					<h1>Vælg session(s)</h1>
+					<form id="dateSearchForm" class="dateSearchForm">
+						<input
+							class="dateInput"
+							type="date"
+							name="dateInput"
+							id="dateInput"
+						/>
+						<button class="search button" id="dateSearchButton" type="submit">
+							<i class="fa fa-search"></i>
+						</button>
+					</form>
 
-            </div>
-            <div class="column" style="border-right: unset;" id="goKartColumn">
+					<div class="message" id="message"></div>
+					<div class="message">OBS: "!" indikerer at pris er pr person</div>
 
-            </div>
-        </div>
-    </div>
+					<div class="calendar">
+						<div class="timeLabels">
+							<div class="timeLabel">9.00</div>
+							<div class="timeLabel">9.30</div>
+							<div class="timeLabel">10.00</div>
+							<div class="timeLabel">10.30</div>
+							<div class="timeLabel">11.00</div>
+							<div class="timeLabel">11.30</div>
+							<div class="timeLabel">12.00</div>
+							<div class="timeLabel">12.30</div>
+							<div class="timeLabel">13.00</div>
+							<div class="timeLabel">13.30</div>
+							<div class="timeLabel">14.00</div>
+							<div class="timeLabel">14.30</div>
+							<div class="timeLabel">15.00</div>
+							<div class="timeLabel">15.30</div>
+							<div class="timeLabel">16.00</div>
+							<div class="timeLabel">16.30</div>
+						</div>
 
-    <button class="addSession button" id="addSessionButton">Tilføj Session til booking</button>
+						<div class="activities" id="sessionTable">
+							<div class="column" id="miniGolfColumn"></div>
+							<div class="column" id="paintBallColumn"></div>
+							<div class="column" id="sumoColumn"></div>
+							<div
+								class="column"
+								style="border-right: unset"
+								id="goKartColumn"
+							></div>
+						</div>
+					</div>
 
-                
-            </div>
-        </div>
-        
-    </main>
-    <footer>
-        FooterTime
-    </footer>
-</body>
-
-    <script src="../scripts/calendar.js"></script>
+					<button class="addSession button" id="addSessionButton">
+						Tilføj Session til booking
+					</button>
+				</div>
+			</div>
+		</main>
+		<footer>FooterTime</footer>
+	</body>
+    <script type="module" src="../fetchUtil.js"></script>
+	<script type="module" src="../scripts/calendar.js"></script>
 </html>

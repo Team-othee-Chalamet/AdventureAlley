@@ -16,9 +16,11 @@ import java.util.List;
 @Entity
 public class Booking extends BaseEntity {
 
-    String personName;
-    String personEmail;
-    String personPhoneNr;
+    private String personName;
+    private String personEmail;
+    private String personPhoneNr;
+    private double bookingPrice;
+    private int guestAmount;
 
     @OneToMany (mappedBy = "booking", cascade = CascadeType.ALL)
     private List<Addon> addOns = new ArrayList<>();
@@ -28,10 +30,12 @@ public class Booking extends BaseEntity {
 
     public Booking(){}
 
-    public Booking(String personName, String personEmail, String personPhoneNr) {
+    public Booking(String personName, String personEmail, String personPhoneNr, double bookingPrice, int guestAmount) {
         this.personName = personName;
         this.personEmail = personEmail;
         this.personPhoneNr = personPhoneNr;
+        this.bookingPrice = bookingPrice;
+        this.guestAmount = guestAmount;
     }
 
     public String getPersonName() {
@@ -97,5 +101,21 @@ public class Booking extends BaseEntity {
             session.setBooking(null);
         }
         sessions.clear();
+    }
+
+    public double getBookingPrice() {
+        return bookingPrice;
+    }
+
+    public int getGuestAmount() {
+        return guestAmount;
+    }
+
+    public void setBookingPrice(double bookingPrice) {
+        this.bookingPrice = bookingPrice;
+    }
+
+    public void setGuestAmount(int guestAmount) {
+        this.guestAmount = guestAmount;
     }
 }

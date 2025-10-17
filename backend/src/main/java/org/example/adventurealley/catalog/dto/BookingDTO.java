@@ -8,4 +8,6 @@ public record BookingDTO(Long id,
                          String bookingName,
                          String bookingEmail,
                          String bookingPhoneNr,
+                         double bookingPrice,
+                         int guestAmount,
                          List<SessionDTO> sessionDtos) {}

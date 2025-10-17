@@ -1,6 +1,12 @@
 console.log("Calendar.js loaded");
 
+let guestAmount = 1;
+let price = 0;
+
 document.addEventListener("DOMContentLoaded", initApp);
+
+//Import post function
+import { post } from "../fetchUtil.js";
 
 function initApp() {
 	const date = new Date();
@@ -8,7 +14,7 @@ function initApp() {
 
 	const dateStr = date.toISOString().split("T")[0];
 
-	console.log(dateStr);
+	document.querySelector("#dateInput").value = dateStr;
 
 	reloadAndRenderSessions(dateStr);
 	addEventListeners();
@@ -16,6 +22,9 @@ function initApp() {
 
 function setMessage(message) {
 	document.querySelector("#message").innerHTML = message;
+}
+function setSubmitMessage(message) {
+	document.querySelector("#submitMessage").innerHTML = message;
 }
 
 function addEventListeners() {
@@ -31,6 +40,177 @@ function addEventListeners() {
 	document
 		.querySelector("#chosenSessionsField")
 		.addEventListener("click", () => handleSessionsFieldClick(event));
+    document
+        .querySelector("#guestSelect")
+        .addEventListener("click", () => handleGuestSelectClick(event));
+    document
+        .querySelector("#bookingForm")
+        .addEventListener("submit", () => handleSubmitClick(event));
+}
+
+function handleSubmitClick(event){
+    event.preventDefault();
+    console.log("Hello");
+
+    const target = event.target;
+    const formData = new FormData(target);
+
+    const booking = getBookingFromField(formData);
+}
+
+function getBookingFromField(formData){
+    const selectedSessionDivs = document.querySelectorAll(".booking");
+    let selectedSessions = getSessionsArray(selectedSessionDivs);
+    
+    
+    console.log(selectedSessions);
+
+
+    const booking = {
+        "bookingName": formData.get('nameInput'),
+        "bookingEmail": formData.get('emailInput'),
+        "bookingPhoneNr": formData.get('phoneInput'),
+        "bookingPrice": price,
+        "guestAmount": guestAmount,
+        "sessionDtos": selectedSessions
+    }
+
+    
+    if (selectedSessions.length === 0){
+        setSubmitMessage("Du kan ikke lave en booking uden at have valgt mindst en session");
+    }
+    else{
+        postBooking(booking);
+    }
+}
+
+async function postBooking(booking){
+    try{
+        const resp = await post("http://127.0.0.1:8080/api/bookings", booking);
+        setSubmitMessage("Du har oprettet en booking, du kan nu lukke siden.")
+        removeSelectedSessions();
+    }
+    catch(error){
+        console.log(error);
+        console.log("DER VAR EN FEJL");
+        setSubmitMessage("Der var en fejl i vores ende, prøv igen senere");
+    }
+    
+        
+
+    /*
+    const resp = await fetch("127.0.0.1:8080/api/bookings", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(booking)
+    })
+    if(resp.ok){
+        console.log("success");
+    }
+    else{
+        console.log("Oof")
+    }
+        */
+}
+
+function getSessionsArray(selectedSessionDivs){
+    let returnArray = [];
+
+    let dateCheck = null;
+    for(const sessionDiv of selectedSessionDivs){
+        console.log(dateCheck);
+        if(dateCheck !== null && dateCheck !== sessionDiv.getAttribute("bookingDate")){
+            setMessage("Der var en fejl: Du kan ikke vælge sessions fra to forskellige dage.");
+            removeSelectedSessions();
+            return [];
+        }
+
+        dateCheck = sessionDiv.getAttribute("bookingDate");
+        
+        returnArray.push(convertToBookingFromDiv(sessionDiv));
+    }
+    return returnArray;
+}
+
+function removeSelectedSessions(){
+    const selectedSessionDivs = document.querySelectorAll(".booking");
+    for(const sessionDiv of selectedSessionDivs){
+        sessionDiv.remove();
+    }
+    const date = new Date();
+	date.setDate(date.getDate() + 1);
+
+	const dateStr = date.toISOString().split("T")[0];
+    document.querySelector("#dateInput").value=dateStr;
+    
+    reloadAndRenderSessions(dateStr);
+}
+
+function convertToBookingFromDiv(bookingDiv){
+
+    const session = {
+        date: bookingDiv.getAttribute("bookingDate"),
+        startTime: bookingDiv.getAttribute("startTime"),
+        endTime: bookingDiv.getAttribute("endTime"),
+        activityType: bookingDiv.getAttribute("activityType"),
+    }
+
+    return session;
+}
+
+function handleGuestSelectClick(event){
+    event.preventDefault();
+    if(event.target.hasAttribute("data-isPlus")){
+        handleGuestChange("plus");
+    }
+    if(event.target.hasAttribute("data-isMinus")){
+        handleGuestChange("minus");
+    }
+}
+
+function handleGuestChange(changer){
+    if(changer === "plus"){
+        guestAmount++;
+    }
+    if(changer === "minus"){
+        guestAmount--;
+    }
+
+    updateGuestAmount();
+    updatePrice();
+}
+
+function updatePrice(){
+    console.log("Updating Price");
+    price = 0;
+
+    const sessionDivs = document.querySelectorAll(".booking");
+    console.log(sessionDivs);
+
+    let sessions;
+
+    for(const sessionDiv of sessionDivs){
+        const sessionPrice = parseFloat(sessionDiv.getAttribute("data-price"));
+        console.log(sessionPrice);
+        if(sessionDiv.getAttribute("activityType") === "Gokart" || sessionDiv.getAttribute("activityType") === "Minigolf"){
+            price += sessionPrice * guestAmount;
+            console.log(price);
+        }
+        else{
+            price += sessionPrice;
+        }
+    }
+
+    console.log(price);
+
+    document.querySelector("#moneyAmount").innerHTML = price + ",-";
+}
+
+function updateGuestAmount(){
+    const guestAmountDisplay = document.querySelector("#guestAmount");
+    guestAmountDisplay.innerHTML = guestAmount;
 }
 
 function handleSessionsFieldClick(event) {
@@ -45,7 +225,7 @@ function handleSessionsFieldClick(event) {
 		const parent = target.parentElement;
 
 		const reservedSessions = document.querySelectorAll(".reserved");
-		for (reservedSession of reservedSessions) {
+		for (const reservedSession of reservedSessions) {
             console.log(reservedSession.getAttribute("startTime"));
             console.log(parent.getAttribute("startTime"));
 			if(reservedSession.getAttribute("data-startTime") == parent.getAttribute("startTime") && reservedSession.getAttribute("data-activityType") == parent.getAttribute("activityType") ){
@@ -55,6 +235,7 @@ function handleSessionsFieldClick(event) {
 
 		parent.remove();
 	}
+    updatePrice();
 }
 
 function handleAddSessionClick(event) {
@@ -65,12 +246,14 @@ function handleAddSessionClick(event) {
 	const sessionDate = sessionDiv.getAttribute("data-bookingDate");
 	const sessionStartTime = sessionDiv.getAttribute("data-startTime");
 	const sessionEndTime = sessionDiv.getAttribute("data-endTime");
+    const sessionPrice = sessionDiv.getAttribute("data-price");
 
 	const session = {
 		activityType: activityType,
 		date: sessionDate,
 		startTime: sessionStartTime,
 		endTime: sessionEndTime,
+        price: sessionPrice
 	};
 
 	console.log(session);
@@ -89,6 +272,7 @@ function addSessionToBooking(session) {
 	bookingSessionDiv.setAttribute("bookingDate", session.date);
 	bookingSessionDiv.setAttribute("startTime", session.startTime);
 	bookingSessionDiv.setAttribute("endTime", session.endTime);
+    bookingSessionDiv.setAttribute("data-price", session.price);
 
 	const bookingSessionDivTitle = document.createElement("div");
 	bookingSessionDivTitle.classList.add("bookingActivity");
@@ -99,6 +283,13 @@ function addSessionToBooking(session) {
 	const bookingSessionDivStartTime = document.createElement("div");
 	bookingSessionDivStartTime.classList.add("bookingStartTime");
 	bookingSessionDivStartTime.innerHTML = session.startTime;
+    const bookingSessionDivPrice = document.createElement("div");
+	bookingSessionDivPrice.classList.add("bookingPrice");
+	bookingSessionDivPrice.innerHTML = session.price + ",-";
+
+    if(session.activityType === "Minigolf" || session.activityType === "Gokart"){
+        bookingSessionDivPrice.innerHTML = bookingSessionDivPrice.innerHTML + " pr. person"
+    }
 
 	const removeButton = document.createElement("div");
 	removeButton.setAttribute("removeButton", true);
@@ -108,18 +299,20 @@ function addSessionToBooking(session) {
 	bookingSessionDiv.appendChild(bookingSessionDivTitle);
 	bookingSessionDiv.appendChild(bookingSessionDivDate);
 	bookingSessionDiv.appendChild(bookingSessionDivStartTime);
+    bookingSessionDiv.appendChild(bookingSessionDivPrice);
 	bookingSessionDiv.appendChild(removeButton);
 
 	console.log(bookingSessionDiv);
 
 	const markedSession = document.querySelector(".chosen");
 	const sessions = document.querySelectorAll(".session");
-	for (othersession of sessions) {
+	for (const othersession of sessions) {
 		othersession.classList.remove("chosen");
 	}
 	markedSession.classList.toggle("reserved");
 
 	document.querySelector("#chosenSessionsField").appendChild(bookingSessionDiv);
+    updatePrice();
 }
 
 async function handleDateSearchClick(event) {
@@ -143,7 +336,7 @@ function handleSessionTableClick(event) {
 			} else {
 				console.log("This session is unbooked.");
 				const sessions = document.querySelectorAll(".session");
-				for (othersession of sessions) {
+				for (const othersession of sessions) {
 					othersession.classList.remove("chosen");
 				}
 				session.classList.toggle("chosen");
@@ -152,7 +345,7 @@ function handleSessionTableClick(event) {
 	} else {
 		const markedSession = document.querySelector(".chosen");
 		const sessions = document.querySelectorAll(".session");
-		for (othersession of sessions) {
+		for (const othersession of sessions) {
 			othersession.classList.remove("chosen");
 		}
 	}
@@ -174,7 +367,7 @@ async function fetchSessions(date) {
 		console.log("Error when fetching sessions from backend.");
 		setMessage("Der var en fejl i indlæsningen af kalenderen.");
 	} else {
-		setMessage("Viser sessions for: " + date);
+		document.querySelector("#dateInput").value = date;
 	}
 
 	return await resp.json();
@@ -192,6 +385,16 @@ function renderSession(session) {
 	const sessionElement = document.createElement("div");
 	sessionElement.setAttribute("sessionBlock", true);
 
+    const activityLabel = document.createElement("div");
+    activityLabel.classList.add("activityLabel")
+    sessionElement.appendChild(activityLabel);
+
+    const priceLabel = document.createElement("div");
+    priceLabel.classList.add("priceLabel");
+    priceLabel.innerHTML = session.price + ",-";
+    sessionElement.appendChild(priceLabel);
+    sessionElement.setAttribute("data-price", session.price);
+
 	timeSlotElement.appendChild(sessionElement);
 
 	timeSlotElement.classList.add("timeSlot");
@@ -201,28 +404,28 @@ function renderSession(session) {
 	switch (session.activityType) {
 		case "Minigolf":
 			sessionElement.classList.add("Minigolf", "session");
-			sessionElement.innerHTML = "MiniGolf";
+			sessionElement.firstElementChild.innerHTML = "MiniGolf";
 			timeSlotElement.style.setProperty("--duration", "2");
 			sessionElement.setAttribute("data-activityType", "Minigolf");
 			column = "#miniGolfColumn";
 			break;
 		case "Gokart":
 			sessionElement.classList.add("Gokart", "session");
-			sessionElement.innerHTML = "Gokart";
+			sessionElement.firstElementChild.innerHTML = "Gokart";
 			timeSlotElement.style.setProperty("--duration", "4");
 			sessionElement.setAttribute("data-activityType", "Gokart");
 			column = "#goKartColumn";
 			break;
 		case "Sumo":
 			sessionElement.classList.add("Sumo", "session");
-			sessionElement.innerHTML = "Sumo";
+			sessionElement.firstElementChild.innerHTML = "Sumo";
 			timeSlotElement.style.setProperty("--duration", "1");
 			sessionElement.setAttribute("data-activityType", "Sumo");
 			column = "#sumoColumn";
 			break;
 		case "Paintball":
 			sessionElement.classList.add("Paintball", "session");
-			sessionElement.innerHTML = "Paintball";
+			sessionElement.firstElementChild.innerHTML = "Paintball";
 			timeSlotElement.style.setProperty("--duration", "6");
 			sessionElement.setAttribute("data-activityType", "Paintball");
 			column = "#paintBallColumn";
@@ -288,6 +491,13 @@ function renderSession(session) {
 
 	sessionElement.setAttribute("data-endTime", session.endTime);
 
+    if(session.isPerPerson){
+        const isPerPersonMarker = document.createElement("div");
+        isPerPersonMarker.classList.add("perPersonMarker");
+        isPerPersonMarker.innerHTML = "!";
+        sessionElement.appendChild(isPerPersonMarker);
+    }
+
 	if (session.bookingStatus) {
 		sessionElement.classList.add("booked");
 		sessionElement.setAttribute("data-isBooked", true);
@@ -299,7 +509,7 @@ function renderSession(session) {
 function removeSessions() {
 	const miniGolfSessionsRendered = document.querySelectorAll(".timeSlot");
 	console.log(miniGolfSessionsRendered);
-	for (session of miniGolfSessionsRendered) {
+	for (const session of miniGolfSessionsRendered) {
 		session.remove();
 	}
 }

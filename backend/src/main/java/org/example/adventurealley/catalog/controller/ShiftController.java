@@ -24,13 +24,11 @@ public class ShiftController {
 
     private static final Logger log = LoggerFactory.getLogger(ShiftController.class);
     EmployeeRepo employeeRepo;
-    ActivityRepo activityRepo;
     ShiftService shiftService;
 
-    public ShiftController(ShiftService shiftService, EmployeeRepo employeeRepo, ActivityRepo activityRepo) {
+    public ShiftController(ShiftService shiftService, EmployeeRepo employeeRepo) {
         this.shiftService = shiftService;
         this.employeeRepo = employeeRepo;
-        this.activityRepo = activityRepo;
     }
 
     @GetMapping

@@ -6,7 +6,7 @@ import org.example.adventurealley.catalog.model.Session;
 public class SessionMapper {
 
     public static SessionDTO toDTO(Session session) {
-        SessionDTO sessionDTO = new SessionDTO(session.getDate(), session.getStartTime(), session.getEndTime(), session.getActivityType(), session.getBookingStatus());
+        SessionDTO sessionDTO = new SessionDTO(session.getDate(), session.getStartTime(), session.getEndTime(), session.getActivityType(), session.getPrice(), session.getActivity().isPerPerson(), session.getBookingStatus());
         return sessionDTO;
     }
 
