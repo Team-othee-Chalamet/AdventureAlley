@@ -44,14 +44,13 @@ function renderWeekHeader(startMon) { // render headeren med datoer
     })}`;
   }
 
-  // (valgfrit) vis uge-range i #weekRange hvis det element findes
+  // vis uge-range i #weekRange
   const end = endOfWeek(startMon);
   const rangeEl = document.getElementById("weekRange");
-  if (rangeEl) {
-    const fmt = (dt) =>
-      dt.toLocaleDateString("da-DK", { day: "2-digit", month: "2-digit" });
-    rangeEl.textContent = `· ${fmt(startMon)}–${fmt(new Date(end - 1))}`;
-  }
+  const dateFormat = (dateInput) =>
+      dateInput.toLocaleDateString("da-DK", { day: "2-digit", month: "2-digit" });
+  rangeEl.textContent = `· ${dateFormat(startMon)}–${dateFormat(new Date(end - 1))}`;
+
 }
 
 // --- DOM render: tom uge ---
@@ -63,23 +62,29 @@ function renderEmptyWeek() {
 // --- DOM render: én medarbejder pr. celle ---
 function renderShifts(shifts) {
   const tbody = document.querySelector("#rows");
-  if (!tbody) return;
 
   const nextRow = Array(7).fill(0); // næste ledige række pr. dag
 
   for (const s of shifts) {
-    if (!s || !s.date) continue;
-    const col = dowIndex(s.date);
-    const rowIndex = nextRow[col];
+    const col = dowIndex(s.date); //Finder ugedag konverere til dansk og sætter den som col
+    const rowIndex = nextRow[col]; //sætter rowIndex til specifik plads i nextRow Arrayet udfra col
 
-    const tr = ensureRow(tbody, rowIndex);
-    const name =
-      (s.employee && (s.employee.name || s.employee.staffId)) || "Ukendt";
-
+    const tr = ensureRow(tbody, rowIndex); 
+    const name = s.employee.name;  // finder det navnet vi skal putte i vores celle
+    const cell = tr.children[col];
+    cell.textContent = name;
+    
     tr.children[col].textContent = name;
+    const btn = document.createElement("button");
+      btn.textContent = "🗑";
+      btn.className = "delete-btn";
+      btn.onclick = (e) => { e.stopPropagation(); deleteShift(s.id); };
+      cell.appendChild(document.createTextNode(" "));
+      cell.appendChild(btn);
     nextRow[col]++;
   }
 }
+
 
 // Sikrer at tbody har en række 'index' med 7 tomme celler
 function ensureRow(tbody, index) {
@@ -164,7 +169,6 @@ async function populateEmployeeSelect() {
 }
 
 
-// --- Form submit: POST urlencoded body ---
 function wireForm() {
   const form = document.getElementById("createShiftForm");
   if (!form) return;
@@ -172,23 +176,80 @@ function wireForm() {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const fd = new FormData(form);
-    const qs = new URLSearchParams(fd);
+    // Form must have inputs named: date, startTime, endTime, employeeId
+    const body = new URLSearchParams(new FormData(form));
+    const token = localStorage.getItem("token");
 
-    const res = await fetch("http://localhost:8080/api/shifts", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: qs.toString(),
-    });
+    try {
+      const res = await fetch("http://localhost:8080/api/shifts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        },
+        body
+      });
 
-    if (res.ok) {
-      await init();   // re-render næste uge
-      form.reset();
-    } else {
-      alert("Create failed: " + res.status);
+      if (!res.ok) {
+        const msg = await res.text().catch(() => "");
+        alert(`Create failed ${res.status}: ${msg || "(no message)"}`);
+        return;
+      }
+
+      form.reset();   // clear form
+      init();         // refresh table
+    } catch (err) {
+      alert("Network error: " + err.message);
     }
   });
 }
+
+function renderShifts(shifts) {
+  const tbody = document.querySelector("#rows");
+  const nextRow = Array(7).fill(0);
+
+  for (const s of shifts) {
+    const col = dowIndex(s.date);
+    const rowIndex = nextRow[col];
+    const tr = ensureRow(tbody, rowIndex);
+
+    const name = s.employee?.name ?? s.employeeName ?? "Ukendt"; // alt efter din DTO
+    const cell = tr.children[col];
+    cell.textContent = name;
+
+    if (s.id != null) {
+      const btn = document.createElement("button");
+      btn.textContent = "🗑";
+      btn.className = "delete-btn";
+      btn.onclick = (e) => { e.stopPropagation(); deleteShift(s.id); };
+      cell.appendChild(document.createTextNode(" "));
+      cell.appendChild(btn);
+    }
+
+    nextRow[col]++;
+  }
+}
+
+async function deleteShift(id) {
+  const token = localStorage.getItem("token");
+  if (!confirm("Er du sikker på, at du vil slette denne vagt?")) return;
+
+  const res = await fetch(`${BASE}/${id}`, {
+    method: "DELETE",
+    headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}) }
+  });
+
+  if (!res.ok) {
+    const msg = await res.text().catch(() => "");
+    alert(`Sletning mislykkedes (${res.status}): ${msg || "(no message)"}`);
+    return;
+  }
+  await init();
+}
+
+
+
+
 
 // --- Kald direkte (script er defer i HTML) ---
 wireForm();

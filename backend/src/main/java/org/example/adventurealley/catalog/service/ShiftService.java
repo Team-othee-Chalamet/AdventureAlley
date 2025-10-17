@@ -55,11 +55,11 @@ public class ShiftService {
         System.out.println("Employee updated");
     }
 
-    public ShiftDTO createShift(LocalDate date, LocalTime startTime, LocalTime endTime, Employee employee) {
+    public ShiftDTO createShift(Long id, LocalDate date, LocalTime startTime, LocalTime endTime, Employee employee) {
         Shift shift = new Shift(date, startTime, endTime, employee);
         System.out.println("CrateShift i ShiftService");
         System.out.println("Shift = "+shift);
         shiftRepo.save(shift);
-        return new ShiftDTO(date, startTime, endTime, employee);
+        return new ShiftDTO(id, date, startTime, endTime, employee);
     }
 }
