@@ -53,7 +53,6 @@ public class ProductServiceImpl implements ProductService {
             updatedProduct.setName(product.getName());
             updatedProduct.setPrice(product.getPrice());
             updatedProduct.setAmount(product.getAmount());
-            updatedProduct.setDescription(product.getDescription());
             return ProductMapper.toDto(productRepo.save(updatedProduct));
         }
 

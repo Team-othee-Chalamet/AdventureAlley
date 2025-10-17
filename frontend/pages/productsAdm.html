@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Produkter</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../headAndFoot.css">
+    <link rel="stylesheet" href="../modalAndTable.css">
+    <script src="../scripts/productAdm.js" type="module"></script>
+  </head>
+  <body>
+    <header>
+      <div class="headerLogo">ADVENTURE ALLEY</div>
+    </header>
+    <main>
+        
+        <!-- Modal which is a popup form -->
+        <div id="modal" class="modal hidden">
+            <div class="modal-content">
+                <span id="close-modal" class="close">&times;</span>
+                <h2>Tilføj / Opdater produkt</h2>
+                <form id="product-form">
+                    <input type="hidden" id="id" name="id" />
+                    <input type="text" id="name" name="name" placeholder="Navn" required/>
+                    <input type="text" id="amount" name="amount" placeholder="Mængde" required/>
+                    <input type="number" id="price" name="price" placeholder="Pris" required/>
+                    <button type="submit" class="addProduct button">Gem</button>
+                </form>
+            </div>
+         </div> 
+        <div class="container">
+            <h1>Administrer tilkøbsprodukter</h1>
+         <table id="product-table">
+            <thead>
+            <tr>
+                <th data-key="id" data-label="Id">ID</th>
+                <th data-key="name" data-label="Name">Navn</th>
+                <th data-key="amount" data-label="Amount">Mængde</th>
+                <th data-key="price" data-label="Price">Pris</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody id="product-table-body">
+            </tbody>
+        </table>
+        <button id="show-modal" class="addProduct button">Tilføj et produkt</button>
+    </div>
+    </main>
+  </body>
+</html>
