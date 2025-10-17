@@ -8,12 +8,15 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActivityPaintBall extends Activity {
+public class ActivityPaintBall implements Activity {
+
+    static boolean perPerson = false;
+    static double price = 1200.00;
 
     static int durationInHours = 3;
     static int durationInMinutes = 0;
 
-    public static List<Session> getAvailableSessions(LocalDate startDate, LocalDate endDate){
+    public List<Session> getAvailableSessions(LocalDate startDate, LocalDate endDate){
         List<Session> generatedSessions = new ArrayList<>();
 
         LocalDate currentIterationDay = startDate; //Set a currentDay to differentiate between startDate and the current date having sessions added
@@ -31,5 +34,13 @@ public class ActivityPaintBall extends Activity {
 
 
         return generatedSessions;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public boolean isPerPerson(){
+        return perPerson;
     }
 }

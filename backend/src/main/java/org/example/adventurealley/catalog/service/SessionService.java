@@ -4,10 +4,7 @@ import org.example.adventurealley.catalog.dto.BookingMapper;
 import org.example.adventurealley.catalog.dto.SessionDTO;
 import org.example.adventurealley.catalog.dto.SessionMapper;
 import org.example.adventurealley.catalog.model.Session;
-import org.example.adventurealley.catalog.model.activities.ActivityGoKart;
-import org.example.adventurealley.catalog.model.activities.ActivityMiniGolf;
-import org.example.adventurealley.catalog.model.activities.ActivityPaintBall;
-import org.example.adventurealley.catalog.model.activities.ActivitySumo;
+import org.example.adventurealley.catalog.model.activities.*;
 import org.example.adventurealley.catalog.repository.SessionRepo;
 import org.springframework.stereotype.Service;
 
@@ -65,10 +62,10 @@ public class SessionService {
         }
         //Sessions within the span have been found, now to find the sessions that are unbooked.
         List<Session> unbookedSessions = new ArrayList<>();
-        unbookedSessions.addAll(ActivityGoKart.getAvailableSessions(startDate, endDate));//Add all Gokart sessions
-        unbookedSessions.addAll(ActivitySumo.getAvailableSessions(startDate, endDate));//Add all Paintball sessions
-        unbookedSessions.addAll(ActivityPaintBall.getAvailableSessions(startDate, endDate));//Add all Sumo Sessions
-        unbookedSessions.addAll(ActivityMiniGolf.getAvailableSessions(startDate, endDate));//Add all miniGolf Sessions
+        unbookedSessions.addAll(ActivityFactory.getActivity(ActivityType.Gokart).getAvailableSessions(startDate, endDate));//Add all Gokart sessions
+        unbookedSessions.addAll(ActivityFactory.getActivity(ActivityType.Sumo).getAvailableSessions(startDate, endDate));//Add all Paintball sessions
+        unbookedSessions.addAll(ActivityFactory.getActivity(ActivityType.Paintball).getAvailableSessions(startDate, endDate));//Add all Sumo Sessions
+        unbookedSessions.addAll(ActivityFactory.getActivity(ActivityType.Minigolf).getAvailableSessions(startDate, endDate));//Add all miniGolf Sessions
 
         List<Session> sessionsToRemove = new ArrayList<>();
 

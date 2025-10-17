@@ -8,11 +8,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-public class Activity extends BaseEntity {
+public interface Activity {
 
-    static public List<Session> getAvailableSessions(LocalDate startDate, LocalDate endDate){
-        return new ArrayList<>();
-    }
+    public List<Session> getAvailableSessions(LocalDate startDate, LocalDate endDate);
+
+    public double getPrice();
+
+    public boolean isPerPerson();
 
 }
