@@ -5,7 +5,7 @@ import org.example.adventurealley.catalog.model.Product;
 public class ProductMapper {
 
     static public ProductDTO toDto (Product product){
-        return new ProductDTO(product.getId(), product.getName(), product.getPrice(), product.getAmount(), product.getDescription());
+        return new ProductDTO(product.getId(), product.getName(), product.getPrice(), product.getAmount());
     }
 
     static public Product toEntity(ProductDTO productDTO){
@@ -13,7 +13,6 @@ public class ProductMapper {
         product.setName(productDTO.name());
         product.setPrice(productDTO.price());
         product.setAmount(productDTO.amount());
-        product.setDescription(productDTO.description());
         return product;
     }
 }
