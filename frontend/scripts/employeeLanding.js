@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", initApp);
 //Import get function
 import { post } from "../fetchUtil.js"
 import { get } from "../fetchUtil.js"
+import { put } from "../fetchUtil.js"
 
 function initApp(){
     initEmployeeLanding();
@@ -93,6 +94,12 @@ async function handleTableClick(event) {
     idRow.appendChild(formId);
     form.appendChild(idRow);
 
+    const idForData = document.createElement("input");
+    idForData.type = "hidden";
+    idForData.name = "id";
+    idForData.value = clickedRow.children[0].textContent;
+    form.appendChild(idForData);
+
     // Add date to form
     const dateRow = document.createElement("div");
     dateRow.className = "formRow";
@@ -165,13 +172,20 @@ async function handleTableClick(event) {
         sessionRow.className = "formRow";
         const sessionActivity = document.createElement("p");
         const sessionTime = document.createElement("p");
+
+        const idForSession = document.createElement("input");
+        idForSession.type = "hidden";
+        idForSession.name = "id";
+        idForSession.value = session.id;
+        sessionRow.appendChild(idForSession);
+
         sessionActivity.textContent = session.activityType;
         sessionTime.textContent = session.startTime + " - " + session.endTime;
         sessionRow.appendChild(sessionActivity);
         sessionRow.appendChild(sessionTime);
         sessionContainer.appendChild(sessionRow);
+        console.log(session);
     });
-    
     form.appendChild(sessionsRow);
     
     // Add submit button
@@ -272,5 +286,7 @@ function displayBooking(booking) {
 function handleSubmission(event) {
     event.preventDefault();
     console.log("Submit clicked");
+    const formData = new FormData(document.getElementById("editBookingForm"));
+    console.log(formData);
 }
     
