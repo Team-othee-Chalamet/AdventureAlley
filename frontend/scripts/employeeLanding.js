@@ -244,11 +244,41 @@ async function handleTableClick(event) {
     submitButton.id = "submitEditBooking";
     submitButton.type = "submit";
     submitButton.textContent = "Opdater booking";
-    submitButton.addEventListener("click", handleSubmission);
+    submitButton.addEventListener("click", async (event) => {
+  event.preventDefault();
+  console.log("Submit clicked");
+
+  // Remove deleted sessions from booking
+  sessionsToDelete.sort((a, b) => b - a); 
+  sessionsToDelete.forEach(index => {
+    booking.sessionDtos.splice(index, 1);
+  });
+
+  // Build body from the existing booking object + form fields
+  const formData = new FormData(document.getElementById("editBookingForm"));
+  const bookingId = formData.get("id");
+
+  // Copy form fields into booking object
+  booking.bookingName = formData.get("bookingName");
+  booking.bookingEmail = formData.get("bookingEmail");
+  booking.bookingPhoneNr = formData.get("bookingPhoneNr");
+
+  console.log("Final PUT body:", booking);
+
+  try {
+    const resp = await put(
+      `http://localhost:8080/api/bookings/${bookingId}`,
+      booking
+    );
+    console.log("Booking updated successfully:", resp);
+    alert("Booking opdateret succesfuldt.");
+  } catch (error) {
+    console.error("Error updating booking:", error);
+    alert("Fejl ved opdatering af booking. Prøv igen.");
+  }
+});
+    
     displayBox.appendChild(submitButton);
-
-    // ToDo: Handle form submission and send updated data to backend
-
 }
 
 function displayBookings(bookings) {
