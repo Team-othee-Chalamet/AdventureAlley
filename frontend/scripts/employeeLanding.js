@@ -271,7 +271,8 @@ async function handleTableClick(event) {
       booking
     );
     console.log("Booking updated successfully:", resp);
-    alert("Booking opdateret succesfuldt.");
+    displayBox.innerHTML = "";
+    displayEmployee();
   } catch (error) {
     console.error("Error updating booking:", error);
     alert("Fejl ved opdatering af booking. Prøv igen.");
