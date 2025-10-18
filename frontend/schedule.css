@@ -13,7 +13,7 @@
 body{ background:var(--bg); color:var(--text); }
 .container{
   max-width: 1200px;
-  margin: 64px auto;
+  margin: 128px auto;
   padding: 0 24px;
 }
 
