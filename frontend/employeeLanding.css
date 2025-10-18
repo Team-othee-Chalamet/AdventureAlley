@@ -1,3 +1,14 @@
+:root{
+  --bg:#423e47;
+  --card:#1f1e22;
+  --soft:#2a2830;
+  --text:#e9e9ee;
+  --muted:#b9b7c2;
+  --brand:#6aa58a;
+  --ring:rgba(106,165,138,.25);
+  --border:#3b3841;
+}
+
 .employeeMain {
     display: flex;
     flex-direction: row;
@@ -12,15 +23,21 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 50%;
     height: 90%;
     margin: 2%;
     border-radius: 5%;
-    background-color: #f0f0f0;
+    background-color: var(--soft);
 }
 
 #employeeOptions {
     width: 70%;
+    padding-bottom: 5%;
+    padding-top: 5%;
+    height: 70vh;
+    .box {
+        width: 100%;
+        background-color: var(--muted);
+    }
 }
 
 #displayBox {
@@ -74,21 +91,29 @@ input {
     background-color: lightgray;
 }
 
-.visible {
-    outline: 3px solid red;
-}
-
 .optionsBox {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 80%;
-    height: auto;
+    height: 80%;
     border-radius: 5%;
-    background-color: #f0f0f0;
+    background-color: var(--muted);
+    padding: 5%;
 
     overflow-y: auto;
+
+    .button {
+        width: 70%;
+    }
+}
+
+
+table {
+    margin: 3%;
+    border-radius: 5px;
+    color: var(--text);
 }
 
 table, th, td {
@@ -99,17 +124,18 @@ table, th, td {
 
 th {
     text-align: center;
-    background-color: aquamarine;
+    background-color: var(--card);
 }
 
 td {
     text-align: center;
-}
-
-tr:nth-child(even) {
-  background-color: #D6EEEE;
+    background-color: var(--soft);
 }
 
 tr:hover {
-    background-color: red;
+    td {
+        background-color: var(--border);
+    }
+    
 }
+

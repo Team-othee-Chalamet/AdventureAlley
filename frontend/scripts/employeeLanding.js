@@ -200,8 +200,9 @@ async function handleTableClick(event) {
         sessionRow.appendChild(sessionTime);
 
         const deleteButton = document.createElement("button");
+        deleteButton.classList = "button";
         deleteButton.type = "button";
-        deleteButton.textContent = "Slet session";
+        deleteButton.textContent = "Slet";
         sessionRow.appendChild(deleteButton);
 
         sessionContainer.appendChild(sessionRow);
@@ -225,15 +226,15 @@ async function handleTableClick(event) {
         console.log("Session index:", sessionRowIndex);
 
         if (clickedElement.type === "button") {
-            if (clickedElement.textContent === "Slet session") {
+            if (clickedElement.textContent === "Slet") {
             sessionRow.style.textDecoration = "line-through";
-            clickedElement.textContent = "Fortryd sletning";
+            clickedElement.textContent = "Fortryd";
             sessionsToDelete.push(sessionRowIndex);
             console.log("Sessions to delete:", sessionsToDelete);
 
-        } else if (clickedElement.textContent === "Fortryd sletning") {
+        } else if (clickedElement.textContent === "Fortryd") {
             sessionRow.style.textDecoration = "none";
-            clickedElement.textContent = "Slet session";
+            clickedElement.textContent = "Slet";
             sessionsToDelete.splice(sessionsToDelete.indexOf(sessionRowIndex), 1);
             console.log("Sessions to delete:", sessionsToDelete);
         }}
@@ -241,6 +242,7 @@ async function handleTableClick(event) {
 
     // Add submit button
     const submitButton = document.createElement("button");
+    submitButton.classList = "button";
     submitButton.id = "submitEditBooking";
     submitButton.type = "submit";
     submitButton.textContent = "Opdater booking";
