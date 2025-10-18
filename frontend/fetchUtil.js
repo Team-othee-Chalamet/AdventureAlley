@@ -34,6 +34,11 @@ async function responseHandler(res) {
   if (!res.ok) {
     throw new Error("HTTP error. status: " + res.status);
   }
+
+  const contentType = res.headers.get("content-type") || "";
+    if (!contentType.includes("application/json")) {
+    return null;
+    }
   return res.json();
 }
 

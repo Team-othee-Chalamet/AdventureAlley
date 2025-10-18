@@ -9,15 +9,13 @@ public class Product extends BaseEntity {
     private String name;
     private double price;
     private String amount;
-    private String description;
 
     public Product() {}
 
-    public Product(String name, double price, String amount, String description) {
+    public Product(String name, double price, String amount) {
         this.name = name;
         this.price = price;
         this.amount = amount;
-        this.description = description;
     }
 
     public String getName() {
@@ -44,11 +42,4 @@ public class Product extends BaseEntity {
         this.amount = amount;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }
