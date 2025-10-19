@@ -48,12 +48,13 @@ public class ShiftController {
             @RequestParam("endTime")
             @DateTimeFormat(pattern = "HH:mm") LocalTime endTime,
 
-            @RequestParam("employeeId") Long employeeId
+            @RequestParam("employeeId") String employeeId,
+            @RequestParam("id") Long id
     ) {
         System.out.println("IN: date=" + date + ", start=" + startTime +
                 ", end=" + endTime + ", empId=" + employeeId);
-        Employee emp = employeeRepo.findById(employeeId).orElse(null);
-        return shiftService.createShift(date, startTime, endTime, emp);
+        Employee emp = employeeRepo.findByStaffId(employeeId).orElse(null);
+        return shiftService.createShift(id, date, startTime, endTime, emp);
     }
 
 
@@ -70,5 +71,4 @@ public class ShiftController {
                                       @RequestParam Long employeeId){
         shiftService.updateShiftEmployee(shiftId,employeeId);
     }
-
 }

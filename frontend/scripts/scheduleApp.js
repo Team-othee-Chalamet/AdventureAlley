@@ -4,38 +4,37 @@
 const BASE = "http://localhost:8080/api/shifts";
 const EMP_BASE = "http://localhost:8080/api/employees";
 
-// --- Helpers: uge-beregning + range ---
-function startOfNextWeek(base = new Date()) {
-  const d = new Date(base);
-  const day = (d.getDay() + 6) % 7;          // mandag=0
-  const nextMon = new Date(d);
-  nextMon.setDate(d.getDate() - day + 7);    // hop til næste mandag
-  nextMon.setHours(0, 0, 0, 0);
+function startOfNextWeek(iDag = new Date) { //metoden returnerer et Date objekt til næste mandag fra i Dag
+  const d = new Date(iDag);
+  const day = (d.getDay() + 6) % 7; // i JS er 0 søndag vi vil have 0 bliver mandag, derfor skrives denne logik som skubber en hver ugedag et tal frem
+  const nextMon = new Date(d); //
+  nextMon.setDate(d.getDate() - day + 7); //Vi skal sætte datoen til næste mandag. getDate returnere dag på måneden som vi minusser med vores modificerede dag så vi rammer en mandag så plusser vi med 7 for at ramme næste mandag
+  nextMon.setHours(0, 0, 0, 0); //Her sætter vi bare timerne på Date objektet
   return nextMon;
 }
 
-function endOfWeek(startMon) {
+function endOfWeek(startMon) { // returnere et Date objekt til næste mandag efter næste mandag
   const end = new Date(startMon);
-  end.setDate(startMon.getDate() + 7);       // eksklusiv næste mandag
+  end.setDate(startMon.getDate() + 7);      
   end.setHours(0, 0, 0, 0);
   return end;
 }
 
 function inRange(dateStr, start, end) {
-  const d = new Date(dateStr + "T00:00");
+  const d = new Date(dateStr + "T00:00"); //T00:00 parse det til dansk til i stedet for amerikansk
   return d >= start && d < end;
 }
 
 // Mandag = 0 ... Søndag = 6
-function dowIndex(isoDate) {
+function dowIndex(isoDate) { //
   const d = new Date(isoDate + "T00:00");
   return (d.getDay() + 6) % 7;
 }
 
 // --- DOM render: header med datoer ---
-function renderWeekHeader(startMon) {
-  const ths = document.querySelectorAll("#shiftTable thead th");
-  for (let i = 0; i < 7; i++) {
+function renderWeekHeader(startMon) { // render headeren med datoer
+  const ths = document.querySelectorAll("#shiftTable thead th"); // ths = Table headers
+  for (let i = 0; i < 7; i++) { // looper 7 gange
     const d = new Date(startMon);
     d.setDate(startMon.getDate() + i);
     const label = ths[i].dataset.label || ths[i].textContent;
@@ -45,14 +44,13 @@ function renderWeekHeader(startMon) {
     })}`;
   }
 
-  // (valgfrit) vis uge-range i #weekRange hvis det element findes
+  // vis uge-range i #weekRange
   const end = endOfWeek(startMon);
   const rangeEl = document.getElementById("weekRange");
-  if (rangeEl) {
-    const fmt = (dt) =>
-      dt.toLocaleDateString("da-DK", { day: "2-digit", month: "2-digit" });
-    rangeEl.textContent = `· ${fmt(startMon)}–${fmt(new Date(end - 1))}`;
-  }
+  const dateFormat = (dateInput) =>
+      dateInput.toLocaleDateString("da-DK", { day: "2-digit", month: "2-digit" });
+  rangeEl.textContent = `· ${dateFormat(startMon)}–${dateFormat(new Date(end - 1))}`;
+
 }
 
 // --- DOM render: tom uge ---
@@ -64,23 +62,29 @@ function renderEmptyWeek() {
 // --- DOM render: én medarbejder pr. celle ---
 function renderShifts(shifts) {
   const tbody = document.querySelector("#rows");
-  if (!tbody) return;
 
   const nextRow = Array(7).fill(0); // næste ledige række pr. dag
 
   for (const s of shifts) {
-    if (!s || !s.date) continue;
-    const col = dowIndex(s.date);
-    const rowIndex = nextRow[col];
+    const col = dowIndex(s.date); //Finder ugedag konverere til dansk og sætter den som col
+    const rowIndex = nextRow[col]; //sætter rowIndex til specifik plads i nextRow Arrayet udfra col
 
-    const tr = ensureRow(tbody, rowIndex);
-    const name =
-      (s.employee && (s.employee.name || s.employee.staffId)) || "Ukendt";
-
+    const tr = ensureRow(tbody, rowIndex); 
+    const name = s.employee.name;  // finder det navnet vi skal putte i vores celle
+    const cell = tr.children[col];
+    cell.textContent = name;
+    
     tr.children[col].textContent = name;
+    const btn = document.createElement("button");
+      btn.textContent = "🗑";
+      btn.className = "delete-btn";
+      btn.onclick = (e) => { e.stopPropagation(); deleteShift(s.id); };
+      cell.appendChild(document.createTextNode(" "));
+      cell.appendChild(btn);
     nextRow[col]++;
   }
 }
+
 
 // Sikrer at tbody har en række 'index' med 7 tomme celler
 function ensureRow(tbody, index) {
@@ -165,7 +169,6 @@ async function populateEmployeeSelect() {
 }
 
 
-// --- Form submit: POST urlencoded body ---
 function wireForm() {
   const form = document.getElementById("createShiftForm");
   if (!form) return;
@@ -173,23 +176,80 @@ function wireForm() {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const fd = new FormData(form);
-    const qs = new URLSearchParams(fd);
+    // Form must have inputs named: date, startTime, endTime, employeeId
+    const body = new URLSearchParams(new FormData(form));
+    const token = localStorage.getItem("token");
 
-    const res = await fetch("http://localhost:8080/api/shifts", {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: qs.toString(),
-    });
+    try {
+      const res = await fetch("http://localhost:8080/api/shifts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+          ...(token ? { Authorization: `Bearer ${token}` } : {})
+        },
+        body
+      });
 
-    if (res.ok) {
-      await init();   // re-render næste uge
-      form.reset();
-    } else {
-      alert("Create failed: " + res.status);
+      if (!res.ok) {
+        const msg = await res.text().catch(() => "");
+        alert(`Create failed ${res.status}: ${msg || "(no message)"}`);
+        return;
+      }
+
+      form.reset();   // clear form
+      init();         // refresh table
+    } catch (err) {
+      alert("Network error: " + err.message);
     }
   });
 }
+
+function renderShifts(shifts) {
+  const tbody = document.querySelector("#rows");
+  const nextRow = Array(7).fill(0);
+
+  for (const s of shifts) {
+    const col = dowIndex(s.date);
+    const rowIndex = nextRow[col];
+    const tr = ensureRow(tbody, rowIndex);
+
+    const name = s.employee?.name ?? s.employeeName ?? "Ukendt"; // alt efter din DTO
+    const cell = tr.children[col];
+    cell.textContent = name;
+
+    if (s.id != null) {
+      const btn = document.createElement("button");
+      btn.textContent = "🗑";
+      btn.className = "delete-btn";
+      btn.onclick = (e) => { e.stopPropagation(); deleteShift(s.id); };
+      cell.appendChild(document.createTextNode(" "));
+      cell.appendChild(btn);
+    }
+
+    nextRow[col]++;
+  }
+}
+
+async function deleteShift(id) {
+  const token = localStorage.getItem("token");
+  if (!confirm("Er du sikker på, at du vil slette denne vagt?")) return;
+
+  const res = await fetch(`${BASE}/${id}`, {
+    method: "DELETE",
+    headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}) }
+  });
+
+  if (!res.ok) {
+    const msg = await res.text().catch(() => "");
+    alert(`Sletning mislykkedes (${res.status}): ${msg || "(no message)"}`);
+    return;
+  }
+  await init();
+}
+
+
+
+
 
 // --- Kald direkte (script er defer i HTML) ---
 wireForm();
