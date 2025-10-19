@@ -38,6 +38,17 @@ main {
     transition: 0.2s;
 }
 
+.back {
+    position: static;        
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: auto;            
+    max-width: none;
+    align-self: flex-start;   
+    margin: 20px;       
+}
+
 .search {
     border-radius: 100px;
 }
