@@ -167,6 +167,7 @@ async function handleTableClick(event) {
     const sessionsRow = document.createElement("div");
     sessionsRow.className = "formRow";
     const sessionsLabel = document.createElement("label");
+    sessionsLabel.id = "sessionsLabel";
     sessionsLabel.textContent = "Sessioner:";
     displayBox.appendChild(sessionsLabel);
     
@@ -200,7 +201,7 @@ async function handleTableClick(event) {
         sessionRow.appendChild(sessionTime);
 
         const deleteButton = document.createElement("button");
-        deleteButton.classList = "button";
+        deleteButton.classList = "button deleteButton";
         deleteButton.type = "button";
         deleteButton.textContent = "Slet";
         sessionRow.appendChild(deleteButton);
