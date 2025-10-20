@@ -1,4 +1,4 @@
-name: Docker CI reusable
+name: Docker_CI_reusable
 on:
   workflow_call:
 

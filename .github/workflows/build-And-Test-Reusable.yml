@@ -1,4 +1,4 @@
-name: Java test
+name: Java_test
 
 on:
   workflow_call:

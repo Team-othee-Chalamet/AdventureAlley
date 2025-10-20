@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build and test:
+  build_and_test:
     uses: ./.github/workflows/build-And-Test-Reusable.yml
 
   docker-ci:
