@@ -1,0 +1,18 @@
+name: CI
+
+on: 
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build and test:
+    uses: ./.github/workflows/build-And-Test-Reusable.yml
+
+  docker-ci:
+    needs: build and test
+    uses: ./.github/workflows/dockerCI-Reusable.yml
