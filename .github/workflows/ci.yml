@@ -14,5 +14,5 @@ jobs:
     uses: ./.github/workflows/build-And-Test-Reusable.yml
 
   docker-ci:
-    needs: build and test
+    needs: build_and_test
     uses: ./.github/workflows/dockerCI-Reusable.yml
