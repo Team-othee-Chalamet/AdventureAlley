@@ -53,7 +53,7 @@ function setSubmitMessage(message) {
 
 
 // --- SUBMITTING A BOOKING ---
-{
+
 	function handleSubmitClick(event){
 		event.preventDefault();
 		console.log("Hello");
@@ -135,11 +135,11 @@ function convertToBookingFromDiv(bookingDiv){
 
     return session;
 }
-}
+
 
 
 // --- REMOVING SELECTED SESSIONS ---
-{
+
 	function removeSelectedSessions(){
 		const selectedSessionDivs = document.querySelectorAll(".booking");
 		for(const sessionDiv of selectedSessionDivs){
@@ -178,11 +178,11 @@ function convertToBookingFromDiv(bookingDiv){
 		}
 		updatePrice();
 	}
-}
+
 
 
 // --- GUEST AMOUNT SELECTION
-{
+
 	function handleGuestSelectClick(event){
 		event.preventDefault();
 		if(event.target.hasAttribute("data-isPlus")){
@@ -235,10 +235,10 @@ function convertToBookingFromDiv(bookingDiv){
 		const guestAmountDisplay = document.querySelector("#guestAmount");
 		guestAmountDisplay.innerHTML = guestAmount;
 	}
-}
+
 
 // --- ADD A SELECTED SESSION TO BOOKING ---
-{
+
 	function handleAddSessionClick(event) {
 		console.log("Add session");
 	
@@ -315,10 +315,10 @@ function convertToBookingFromDiv(bookingDiv){
 		document.querySelector("#chosenSessionsField").appendChild(bookingSessionDiv);
 		updatePrice();
 	}
-}
+
 
 // --- DISPLAY AND RENDERING OF CALENDAR
-{
+
 	async function handleDateSearchClick(event) {
 		event.preventDefault();
 		console.log("Søg clicked");
@@ -493,10 +493,10 @@ function convertToBookingFromDiv(bookingDiv){
 	}
 	
 
-}
+
 
 // --- INTERACTING WITH CALENDAR
-{
+
 	function handleSessionTableClick(event) {
 		const session = event.target.closest(".session");
 	
@@ -522,6 +522,6 @@ function convertToBookingFromDiv(bookingDiv){
 			}
 		}
 	}
-}
+
 
 
